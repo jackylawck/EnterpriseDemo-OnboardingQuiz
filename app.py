@@ -30,8 +30,8 @@ if valid_access_code and passed_key == valid_access_code:
     st.session_state.authenticated = True
 
 if not st.session_state.authenticated:
-    st.title("🔒 企業級新員工入職培訓考核及問卷系統")
-    st.markdown("🏢 [ACME Corporation (Demo) 官方網站](https://www.example.com/)", unsafe_allow_html=True)
+    st.title("🔒 企業級新員工入職培訓考核及問卷系統 (Demo)")
+    st.markdown("🏢 [ACME Corporation (Demo) 官方網站](https://demo-tenant.com/)", unsafe_allow_html=True)
     st.write("")
     user_code = st.text_input("請輸入員工通行碼以開始測驗：", type="password")
     if st.button("確認進入"):
@@ -60,6 +60,8 @@ if "email_sent" not in st.session_state:
 @st.cache_data
 def get_questions():
     questions_str = st.secrets.get("QUESTIONS_JSON", "[]")
+    if not questions_str or questions_str == "[]":
+        return []
     return json.loads(questions_str)
 
 questions = get_questions()
@@ -100,16 +102,16 @@ def generate_pdf(basic_info, quiz_result, survey_data, submit_time_str):
     else:
         pdf.set_font("Helvetica", size=11)
 
-    # 受控文件 Header (已脫殼)
-    pdf.set_font_size(8)
-    pdf.cell(0, 4, txt="ACME Corporation - IMS Controlled Record", ln=1, align="R")
-    pdf.cell(0, 4, txt="Doc ID: DEMO-HR-REC-2026-V1 | ISO 9001 / ISO/IEC 27001 Compliant", ln=1, align="R")
+    # Header (已脫殼)
+    pdf.set_font_size(9)
+    pdf.cell(0, 5, txt="ACME Corporation - IMS Controlled Record", ln=1, align="R")
+    pdf.cell(0, 5, txt="Doc ID: DEMO-HR-REC-V1 | Confidential", ln=1, align="R")
     pdf.ln(3)
 
     # 標題
     pdf.set_font_size(16)
     pdf.cell(0, 10, txt="新員工入職培訓考核及問卷報告", ln=1, align="C")
-    pdf.ln(4)
+    pdf.ln(5)
     
     # 個人基本資料 & 得分
     pdf.set_font_size(11)
@@ -117,23 +119,23 @@ def generate_pdf(basic_info, quiz_result, survey_data, submit_time_str):
     pdf.cell(0, 7, txt=f"姓名：{basic_info['name']}", ln=1)
     pdf.cell(0, 7, txt=f"職員編號：{basic_info['emp_id']}", ln=1)
     pdf.cell(0, 7, txt=f"組別：{basic_info['dept']}", ln=1)
-    pdf.cell(0, 7, txt=f"考核時間：{submit_time_str} (HKT)", ln=1)
+    pdf.cell(0, 7, txt=f"考核時間：{submit_time_str}", ln=1)
     pdf.cell(0, 7, txt=f"測驗得分：{quiz_result['score']} / {quiz_result['total']} ({quiz_result['pass_rate']:.1f}%) - {status_str}", ln=1)
-    pdf.ln(3)
+    pdf.ln(4)
 
     # 一、基本培訓評估問題
     pdf.set_font_size(12)
-    pdf.cell(0, 7, txt="一、基本培訓評估問題", ln=1)
+    pdf.cell(0, 8, txt="一、基本培訓評估問題", ln=1)
     pdf.set_font_size(10)
     pdf.cell(0, 6, txt=f"1. 培訓整體滿意度：{survey_data.get('s1_q1', '')} / 5", ln=1)
     pdf.cell(0, 6, txt=f"2. 培訓內容符合期望：{survey_data.get('s1_q2', '')} / 5", ln=1)
     pdf.cell(0, 6, txt=f"3. 培訓師表現：{survey_data.get('s1_q3', '')} / 5", ln=1)
     print_safe_text(pdf, f"4. 需要改進或增補內容：{survey_data.get('s1_q4', '無')}")
-    pdf.ln(2)
+    pdf.ln(3)
 
     # 二、個人興趣及公司活動
     pdf.set_font_size(12)
-    pdf.cell(0, 7, txt="二、個人興趣及公司活動", ln=1)
+    pdf.cell(0, 8, txt="二、個人興趣及公司活動", ln=1)
     pdf.set_font_size(10)
     pdf.cell(0, 6, txt=f"1. 運動活動興趣：{survey_data.get('s2_q1', '')} / 5", ln=1)
     sports_str = ", ".join(survey_data.get('s2_q2', []))
@@ -146,22 +148,21 @@ def generate_pdf(basic_info, quiz_result, survey_data, submit_time_str):
     pdf.cell(0, 6, txt=f"5. 協助籌辦活動興趣：{survey_data.get('s2_q5', '')} / 5", ln=1)
     print_safe_text(pdf, f"6. 工作與生活平衡看法：{survey_data.get('s2_q6', '無')}")
     print_safe_text(pdf, f"7. 未來公司活動建議：{survey_data.get('s2_q7', '無')}")
-    pdf.ln(2)
+    pdf.ln(3)
 
     # 三、開放式問題
     pdf.set_font_size(12)
-    pdf.cell(0, 7, txt="三、開放式問題", ln=1)
+    pdf.cell(0, 8, txt="三、開放式問題", ln=1)
     pdf.set_font_size(10)
     print_safe_text(pdf, f"1. 對公司文化的看法：{survey_data.get('s3_q1', '無')}")
     print_safe_text(pdf, f"2. 公司優勢與改進建議：{survey_data.get('s3_q2', '無')}")
     print_safe_text(pdf, f"3. 希望獲得的額外支持/資源：{survey_data.get('s3_q3', '無')}")
     print_safe_text(pdf, f"4. 對公司未來發展方向的建議：{survey_data.get('s3_q4', '無')}")
     print_safe_text(pdf, f"5. 其他建議或意見：{survey_data.get('s3_q5', '無')}")
-    pdf.ln(4)
+    pdf.ln(5)
 
-    # 法規與合規聲明 (加強版)
-    pdf.set_font_size(7.5)
-    print_safe_text(pdf, "【法定合規聲明】本文件屬 ACME 內部受控管理紀錄 (IMS)。所載資料受香港《個人資料（私隱）條例》(Cap. 486) 與 ISO/IEC 27001 資訊安全標準嚴格保護，僅供人力資源內部審計與培訓評估用途，未經授權嚴禁翻印或對外發布。", max_chars=48)
+    pdf.set_font_size(8)
+    print_safe_text(pdf, "聲明：本文件為內部培訓紀錄，由員工本人確認填答。個人資料僅供內部人力資源管理用途。", max_chars=45)
 
     return bytes(pdf.output())
 
@@ -171,9 +172,9 @@ def generate_pdf(basic_info, quiz_result, survey_data, submit_time_str):
 def send_email_direct(b_info, q_res, status_str, pdf_bytes):
     smtp_server = st.secrets.get("SMTP_SERVER", "smtp.office365.com")
     smtp_port = int(st.secrets.get("SMTP_PORT", 587))
-    sender_email = st.secrets.get("SENDER_EMAIL", "")
+    sender_email = st.secrets.get("SENDER_EMAIL", "system@example.com")
     sender_password = st.secrets.get("SENDER_PASSWORD", "")
-    receiver_email = st.secrets.get("HR_RECEIVER", "hr@example.com") # 脫殼
+    receiver_email = st.secrets.get("HR_RECEIVER", "hr@example.com")
 
     msg = MIMEMultipart()
     msg['From'] = sender_email
@@ -189,7 +190,7 @@ def send_email_direct(b_info, q_res, status_str, pdf_bytes):
 - 測驗得分：{q_res['score']} / {q_res['total']} ({status_str})
 - 提交時間：{st.session_state.quiz_data.get('submit_time', '')}
 
-PDF 完整考核報告檔案已作為附件隨信附上（Doc ID: DEMO-HR-REC-2026-V1）。"""
+PDF 完整考核報告檔案已作為附件隨信附上。"""
 
     msg.attach(MIMEText(body, 'plain', 'utf-8'))
 
@@ -210,14 +211,7 @@ PDF 完整考核報告檔案已作為附件隨信附上（Doc ID: DEMO-HR-REC-20
 # =========================================================
 if st.session_state.step == 1:
     st.title("📝 企業級新員工入職培訓考核及問卷系統 (Demo)")
-    st.markdown("🏢 [ACME Corporation (Demo) 官方網站](https://www.example.com/)", unsafe_allow_html=True)
-    
-    with st.expander("ℹ️ 個人資料收集聲明 (PICS) 與法規遵循宣告"):
-        st.caption("""
-        1. **收集目的**：本系統所收集之個人資料僅供入職培訓成效考核、內部管理審計及公司活動偏好分析。
-        2. **資料保護**：系統遵循香港《個人資料（私隱）條例》(Cap. 486) 及 ISO/IEC 27001 資安規範，採傳輸加密與即時無持久化運算。
-        3. **查閱權利**：填表人如需查閱或更正個人資料，請聯絡人力資源組 (`hr@example.com`)。
-        """)
+    st.markdown("🏢 [ACME Corporation (Demo) 官方網站](https://demo-tenant.com/)", unsafe_allow_html=True)
     st.write("")
     st.subheader("第一部分：新員工入職培訓測驗")
     
@@ -248,7 +242,7 @@ if st.session_state.step == 1:
                 user_answers[q["id"]] = sub_ans
 
         st.divider()
-        declaration = st.checkbox("本人確認上述資料正確，由本人獨立完成測驗，並同意上述《個人資料收集聲明》。 *")
+        declaration = st.checkbox("本人確認上述資料正確，並由本人獨立完成測驗。 *")
 
         submit_step1 = st.form_submit_button("提交測驗並檢視得分 ➔")
 
@@ -256,16 +250,14 @@ if st.session_state.step == 1:
         if not name or not emp_id or dept == "請選擇組別":
             st.warning("請先完整填寫姓名、職員編號並選擇組別！")
         elif not declaration:
-            st.warning("請先勾選個人確認及私隱聲明方可提交！")
+            st.warning("請先勾選個人確認聲明方可提交！")
         else:
             score = 0
-            # 使用題庫長度計算滿分，若有子題則自行加總
-            total_items = 20 
+            total_items = 20
             for q in questions:
                 user_ans = user_answers.get(q["id"])
                 correct_ans = q.get("answer")
                 if not correct_ans: continue
-
                 if q["type"] == "single":
                     if [user_ans] == correct_ans: score += 1
                 elif q["type"] == "multiple":
@@ -276,7 +268,7 @@ if st.session_state.step == 1:
                         if user_ans.get(sub_q["sub_id"]) == sub_q["answer"]: score += 1
 
             pass_rate = (score / total_items) * 100
-            is_pass = pass_rate >= 75
+            is_pass = score >= 15
             
             hk_tz = timezone(timedelta(hours=8))
             now_hk = datetime.now(hk_tz)
@@ -298,7 +290,7 @@ elif st.session_state.step == 2:
     b_info = st.session_state.quiz_data["basic_info"]
     
     st.title("📊 第二部分：測驗得分結果與問卷調查")
-    st.markdown("🏢 [ACME Corporation (Demo) 官方網站](https://www.example.com/)", unsafe_allow_html=True)
+    st.markdown("🏢 [ACME Corporation (Demo) 官方網站](https://demo-tenant.com/)", unsafe_allow_html=True)
     st.write("")
     
     st.info(f"👤 員工：{b_info['name']} ({b_info['emp_id']}) | 組別：{b_info['dept']}")
@@ -307,7 +299,7 @@ elif st.session_state.step == 2:
         st.balloons()
         st.success("🎉 恭喜通過入職培訓考核！")
     else:
-        st.error("⚠️ 未達 75% 合格標準。")
+        st.error("⚠️ 未達 15 分 (75%) 合格標準。")
         
     st.divider()
     st.subheader("請繼續完成以下意見調查，完成後即可生成 PDF 及發送結果：")
@@ -365,7 +357,7 @@ elif st.session_state.step == 3:
     status_str = "合格 (PASS)" if q_res["is_pass"] else "不合格 (FAIL)"
     
     st.title("🎉 第三部分：考核與問卷完成！")
-    st.markdown("🏢 [ACME Corporation (Demo) 官方網站](https://www.example.com/)", unsafe_allow_html=True)
+    st.markdown("🏢 [ACME Corporation (Demo) 官方網站](https://demo-tenant.com/)", unsafe_allow_html=True)
     st.write("")
     st.subheader(f"成績摘要：{q_res['score']} / {q_res['total']}（{status_str}）")
     
@@ -398,13 +390,14 @@ elif st.session_state.step == 3:
     )
 
     with st.expander("💬 備用提交方式 (WhatsApp 或手動寄信)"):
+        # 已移除真實電話號碼
+        wa_phone = "85200000000"
         wa_msg = f"Dear HR,\n我是 {b_info['dept']} 的 {b_info['name']} ({b_info['emp_id']})。我已完成新員工入職培訓問卷考核（得分：{q_res['score']}/{q_res['total']}，{status_str}）。"
-        # 移除真實電話號碼
-        wa_url = f"https://wa.me/?text={urllib.parse.quote(wa_msg)}"
+        wa_url = f"https://wa.me/{wa_phone}?text={urllib.parse.quote(wa_msg)}"
         st.markdown(
             f'<a href="{wa_url}" target="_blank" style="text-decoration:none;">'
             f'<button style="background-color:#25D366; color:white; padding:10px 16px; border:none; border-radius:6px; font-size:14px; font-weight:bold; cursor:pointer; width:100%; margin-top:8px;">'
-            f'💬 透過 WhatsApp 通知 HR'
+            f'💬 透過 WhatsApp 通知 HR (Demo)'
             f'</button></a>',
             unsafe_allow_html=True
         )
