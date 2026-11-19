@@ -95,7 +95,7 @@
       --primary: #0078d4;
       --primary-dark: #004578;
       --bg-dark: #070f1e;
-      --card-bg: rgba(16, 29, 51, 0.75);
+      --card-bg: rgba(16, 29, 51, 0.78);
       --card-border: rgba(0, 120, 212, 0.28);
       --accent: #107c41;
       --text-main: #f3f4f6;
@@ -260,7 +260,6 @@
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 8px;
       padding: 16px;
-      position: relative;
     }
 
     .flow-node.active {
@@ -335,110 +334,59 @@
       color: #e5e7eb;
     }
 
-    /* Interactive Simulator Styles */
-    .sim-toolbar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      align-items: flex-end;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 16px;
-      border-radius: 8px;
-      margin-bottom: 16px;
-    }
-
-    .sim-field {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      flex: 1;
-      min-width: 190px;
-    }
-
-    .sim-field label {
-      font-size: 0.8rem;
-      color: #93c5fd;
-      font-weight: 600;
-    }
-
-    .sim-field select,
-    .sim-field input[type="text"],
-    .quiz-select {
-      background: rgba(7, 15, 30, 0.92);
-      border: 1px solid rgba(96, 165, 250, 0.35);
-      color: #ffffff;
-      padding: 8px 10px;
-      border-radius: 6px;
-      font-size: 0.86rem;
-      font-family: inherit;
-      width: 100%;
-    }
-
-    .survey-row {
+    /* Interactive 3-Step Streamlit-Style Simulator */
+    .stepper {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 14px;
-      margin-top: 16px;
-      padding: 14px 16px;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .step-pill {
+      padding: 10px 12px;
       border-radius: 8px;
-    }
-
-    .slider-field {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .slider-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.82rem;
-      color: #93c5fd;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.03);
+      font-size: 0.84rem;
       font-weight: 600;
+      color: var(--text-muted);
+      text-align: center;
+      transition: all 0.2s ease;
     }
 
-    .slider-val {
-      color: #34d399;
-      font-weight: 700;
+    .step-pill.current {
+      border-color: rgba(96, 165, 250, 0.75);
+      background: rgba(0, 120, 212, 0.22);
+      color: #ffffff;
     }
 
-    .slider-field input[type="range"] {
-      width: 100%;
-      accent-color: #0078d4;
-      cursor: pointer;
+    .step-pill.done {
+      border-color: rgba(52, 211, 153, 0.5);
+      background: rgba(16, 124, 65, 0.16);
+      color: #6ee7b7;
     }
 
-    .sim-actions {
+    .sim-shell {
+      background: rgba(7, 15, 30, 0.62);
+      border: 1px solid rgba(96, 165, 250, 0.26);
+      border-radius: 10px;
+      padding: 22px;
+    }
+
+    .sim-header-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
       justify-content: space-between;
-      margin-top: 16px;
-      padding: 12px 14px;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 8px;
-    }
-
-    .decl-label {
-      display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 0.86rem;
-      color: #e5e7eb;
-      cursor: pointer;
+      gap: 10px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    .decl-label input[type="checkbox"] {
-      width: 16px;
-      height: 16px;
-      accent-color: #0078d4;
-      cursor: pointer;
+    .sim-header-row h3 {
+      font-size: 1.08rem;
+      color: #ffffff;
     }
 
     .preset-group {
@@ -464,86 +412,390 @@
       color: #ffffff;
     }
 
-    .status-banner {
-      display: none;
-      padding: 10px 14px;
-      border-radius: 6px;
-      font-size: 0.85rem;
-      margin-top: 14px;
+    .sim-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .sim-field {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .sim-field label {
+      font-size: 0.82rem;
+      color: #93c5fd;
       font-weight: 600;
     }
 
-    .status-banner.warn {
+    .sim-input,
+    .sim-select,
+    .sim-textarea {
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(96, 165, 250, 0.35);
+      color: #ffffff;
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-size: 0.86rem;
+      font-family: inherit;
+      width: 100%;
+    }
+
+    .sim-textarea {
+      resize: vertical;
+      min-height: 62px;
+    }
+
+    .q-section-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #93c5fd;
+      margin: 18px 0 10px;
+      padding-left: 10px;
+      border-left: 3px solid var(--primary);
+    }
+
+    .q-block {
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+    }
+
+    .q-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #f3f4f6;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .q-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #60a5fa;
+      background: rgba(0, 120, 212, 0.16);
+      border: 1px solid rgba(96, 165, 250, 0.3);
+      padding: 1px 8px;
+      border-radius: 9999px;
+      white-space: nowrap;
+    }
+
+    .radio-list {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .opt-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: #d1d5db;
+      cursor: pointer;
+      padding: 4px 6px;
+      border-radius: 5px;
+      transition: background 0.15s ease;
+    }
+
+    .opt-label:hover {
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .opt-label input {
+      margin-top: 3px;
+      accent-color: #0078d4;
+      cursor: pointer;
+    }
+
+    .multi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 8px;
+    }
+
+    .chip-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 6px 0 10px;
+    }
+
+    .chip-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(96, 165, 250, 0.28);
+      padding: 5px 10px;
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      color: #e5e7eb;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .chip-label input {
+      accent-color: #0078d4;
+      cursor: pointer;
+    }
+
+    .match-row {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 10px;
+      align-items: center;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .match-row:last-child {
+      border-bottom: none;
+    }
+
+    .match-text {
+      font-size: 0.85rem;
+      color: #d1d5db;
+    }
+
+    .slider-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .slider-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+
+    .slider-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      color: #e5e7eb;
+      margin-bottom: 6px;
+    }
+
+    .slider-val {
+      color: #34d399;
+      font-weight: 700;
+    }
+
+    .slider-card input[type="range"] {
+      width: 100%;
+      accent-color: #0078d4;
+      cursor: pointer;
+    }
+
+    .decl-box {
+      margin-top: 16px;
+      padding: 12px 14px;
+      background: rgba(0, 120, 212, 0.08);
+      border: 1px solid rgba(96, 165, 250, 0.3);
+      border-radius: 8px;
+    }
+
+    .decl-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.86rem;
+      color: #f3f4f6;
+      cursor: pointer;
+    }
+
+    .decl-label input {
+      width: 16px;
+      height: 16px;
+      accent-color: #0078d4;
+      cursor: pointer;
+    }
+
+    .action-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 18px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 11px 20px;
+      border-radius: 7px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-primary.full {
+      width: 100%;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.07);
+      color: #e5e7eb;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      padding: 10px 18px;
+      border-radius: 7px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-secondary.full {
+      width: 100%;
+    }
+
+    .btn-wa {
+      background: #25D366;
+      color: #ffffff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-size: 0.86rem;
+      font-weight: 700;
+      width: 100%;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    .btn-wa:hover {
+      background: #1ebe5b;
+    }
+
+    .alert-box {
+      padding: 11px 14px;
+      border-radius: 7px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .alert-info {
+      background: rgba(0, 120, 212, 0.14);
+      border: 1px solid rgba(96, 165, 250, 0.4);
+      color: #bfdbfe;
+    }
+
+    .alert-warn {
       background: rgba(245, 158, 11, 0.15);
       border: 1px solid rgba(251, 191, 36, 0.45);
       color: #fcd34d;
     }
 
-    .status-banner.fail {
-      background: rgba(220, 38, 38, 0.15);
-      border: 1px solid rgba(248, 113, 113, 0.45);
-      color: #fca5a5;
-    }
-
-    .status-banner.pass {
+    .alert-pass {
       background: rgba(16, 124, 65, 0.18);
       border: 1px solid rgba(52, 211, 153, 0.45);
       color: #6ee7b7;
     }
 
-    .kpi-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 12px;
-      margin-top: 16px;
+    .alert-fail {
+      background: rgba(220, 38, 38, 0.16);
+      border: 1px solid rgba(248, 113, 113, 0.45);
+      color: #fca5a5;
     }
 
-    .kpi-box {
-      background: rgba(0, 120, 212, 0.12);
-      border: 1px solid rgba(96, 165, 250, 0.3);
+    .pdf-preview {
+      margin: 16px 0;
+      background: rgba(10, 19, 36, 0.95);
+      border: 1px dashed rgba(96, 165, 250, 0.45);
       border-radius: 8px;
-      padding: 12px 14px;
-      text-align: center;
-    }
-
-    .kpi-label {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      margin-bottom: 4px;
-    }
-
-    .kpi-value {
-      font-size: 1.15rem;
-      font-weight: 800;
-      color: #60a5fa;
-    }
-
-    .kpi-value.pass-text { color: #34d399; }
-    .kpi-value.fail-text { color: #f87171; }
-
-    .record-preview {
-      margin-top: 16px;
-      background: rgba(7, 15, 30, 0.85);
-      border: 1px dashed rgba(96, 165, 250, 0.4);
-      border-radius: 8px;
-      padding: 16px;
+      padding: 18px;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       color: #cbd5e1;
       line-height: 1.65;
       overflow-x: auto;
     }
 
-    .record-preview .rec-head {
+    .pdf-top-right {
+      text-align: right;
+      font-size: 0.74rem;
       color: #93c5fd;
-      font-weight: 700;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       padding-bottom: 6px;
-      margin-bottom: 8px;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .pdf-doc-title {
+      text-align: center;
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    .pdf-sec-head {
+      color: #60a5fa;
+      font-weight: 700;
+      margin-top: 10px;
+      margin-bottom: 4px;
+    }
+
+    .pdf-foot {
+      margin-top: 12px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.74rem;
+      color: #94a3b8;
+    }
+
+    details.expander {
+      margin-top: 14px;
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 10px 14px;
+    }
+
+    details.expander summary {
+      cursor: pointer;
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: #93c5fd;
+    }
+
+    .wa-preview-box {
+      margin-top: 10px;
+      padding: 10px 12px;
+      background: rgba(7, 15, 30, 0.85);
+      border-radius: 6px;
+      font-size: 0.8rem;
+      color: #cbd5e1;
+      white-space: pre-wrap;
     }
 
     .tech-list {
@@ -616,9 +868,12 @@
       border: 1px solid rgba(251, 191, 36, 0.2);
     }
 
-    @media (max-width: 640px) {
+    @media (max-width: 680px) {
       h1 { font-size: 1.55rem; }
       .card { padding: 18px; }
+      .sim-shell { padding: 14px; }
+      .stepper { grid-template-columns: 1fr; }
+      .match-row { grid-template-columns: 1fr; }
       body { padding: 16px 10px; }
     }
   </style>
@@ -643,8 +898,8 @@
         <span class="en">EnterpriseDemo-OnboardingQuiz: Onboarding Assessment & Survey Engine</span>
       </h1>
       <div class="subtitle">
-        <span class="tc">零資料留存、確定性評分、ESG 滿意度調研與受控 PDF 自動歸檔閉環（DEMO-HR-REC-2026-V1）</span>
-        <span class="en">Zero-Data-Retention Onboarding Quiz, ESG Engagement Survey & Controlled PDF Dispatch Workflow (DEMO-HR-REC-2026-V1)</span>
+        <span class="tc">零資料留存、三階段受控考核與問卷、即時 PDF 合成及自動化歸檔閉環（DEMO-HR-REC-2026-V1）</span>
+        <span class="en">Zero-Data-Retention 3-Step Onboarding Quiz, Full Engagement Survey & Controlled PDF Dispatch (DEMO-HR-REC-2026-V1)</span>
       </div>
 
       <div class="badge-bar">
@@ -679,11 +934,11 @@
         <p class="tc"><strong>本儲存庫為一項企業管治示範專案，展示如何以輕量級 Streamlit 介面、動態 Secrets 隔離、JSON Schema 資料校驗與確定性「治理即代碼」（Governance-as-Code）構建新員工入職培訓考核與滿意度調研閉環。</strong></p>
         <p class="en"><strong>This repository is an Enterprise Demo demonstrating a Zero-Data-Retention new-hire onboarding assessment, engagement survey, and controlled archiving workflow built with Streamlit, isolated Cloud Secrets, JSON Schemas, and deterministic Governance-as-Code.</strong></p>
 
-        <p class="tc">傳統紙本入職測驗與問卷常面臨批改滯後、問卷數據難以統計、紙本易遺失及審計抽查耗時等痛點。<strong>EnterpriseDemo-OnboardingQuiz</strong> 依據國際管理體系（<strong>ISO 9001 / ISO 45001 / ISO/IEC 27001</strong>）設計，在<strong>不架設雲端資料庫、零個人資料持久化（Zero-Data-Retention）</strong>的前提下，整合「入職規章考核」、「培訓滿意度評估」與「文康／ESG 義工興趣調查」，即時於記憶體動態生成受控繁體中文 PDF 報告（<code>DEMO-HR-REC-2026-V1</code>），透過後端 TLS SMTP 一鍵加密直送人力資源部（HRD），並對接下游歸檔與不合格補考追蹤工作流。</p>
-        <p class="en">Paper-based induction quizzes and onboarding surveys suffer from slow manual grading, fragmented feedback, missing timestamps, and audit overhead. <strong>EnterpriseDemo-OnboardingQuiz</strong> aligns with international management standards (<strong>ISO 9001 / ISO 45001 / ISO/IEC 27001</strong>). Without provisioning any external database, employee responses remain strictly in volatile session memory to integrate policy assessment, training satisfaction ratings, and ESG/wellness engagement surveys into a controlled PDF record (<code>DEMO-HR-REC-2026-V1</code>), dispatched via TLS SMTP to HR and paired with downstream archiving and retraining workflows.</p>
+        <p class="tc"><strong>EnterpriseDemo-OnboardingQuiz</strong> 依據國際管理體系（<strong>ISO 9001 / ISO 45001 / ISO/IEC 27001</strong>）設計，在<strong>不架設雲端資料庫、零個人資料持久化（Zero-Data-Retention）</strong>的前提下，整合「第一部分：20 分制規章考核（支援單選、多選與群組配對）」、「第二部分：培訓評估、運動與義工興趣及開放式意見調查」與「第三部分：記憶體動態合成受控繁體中文 PDF 報告（<code>DEMO-HR-REC-2026-V1</code>）並透過 TLS SMTP 一鍵直送 HR」。</p>
+        <p class="en"><strong>EnterpriseDemo-OnboardingQuiz</strong> aligns with international standards (<strong>ISO 9001 / ISO 45001 / ISO/IEC 27001</strong>). Without provisioning any external database, employee data remains strictly in volatile memory across three guided stages: Part I (20-point single, multiple, and group-matching policy quiz), Part II (training evaluation, sports/volunteering engagement, and open-ended feedback), and Part III (in-memory synthesis of controlled PDF <code>DEMO-HR-REC-2026-V1</code> with one-click TLS SMTP delivery to HR).</p>
 
-        <p class="tc">在法規邊界定性上，本系統完全採用<strong>確定性規則比對邏輯（Deterministic Rule-Based Logic）</strong>，<strong>不含任何 AI / 機器學習模型或自動化人事決策演算法</strong>，明確排除於《歐盟人工智能法案》（EU AI Act）及 ISO/IEC 42001 強制範圍之外，同時全面對齊香港<strong>《個人資料（私隱）條例》（第 486 章）</strong>保障資料原則（DPP 1–4）。</p>
-        <p class="en">From a regulatory boundary perspective, this application uses strictly <strong>deterministic rule-based scoring logic (Non-AI)</strong> with zero machine learning or automated employment profiling—explicitly scoping out EU AI Act and ISO/IEC 42001 obligations while adhering to <strong>Hong Kong PDPO (Cap. 486)</strong> Data Protection Principles (DPP 1–4).</p>
+        <p class="tc">本系統完全採用<strong>確定性規則比對邏輯（Deterministic Rule-Based Logic）</strong>，<strong>不含任何 AI / 機器學習模型或自動化人事決策演算法</strong>，明確排除於《歐盟人工智能法案》（EU AI Act）及 ISO/IEC 42001 強制範圍之外，並全面對齊香港<strong>《個人資料（私隱）條例》（第 486 章）</strong>保障資料原則（DPP 1–4）。</p>
+        <p class="en">The system relies exclusively on <strong>deterministic exact-match logic (Non-AI)</strong> with zero machine learning or employment profiling—explicitly scoping out EU AI Act and ISO/IEC 42001 mandates while adhering to <strong>Hong Kong PDPO (Cap. 486)</strong> Data Protection Principles (DPP 1–4).</p>
       </section>
 
       <!-- 流程生命週期與治理閉環 -->
@@ -692,9 +947,6 @@
           <span class="tc">🏛️ 流程生命週期與治理閉環</span>
           <span class="en">🏛️ End-to-End Onboarding Lifecycle & Governance Closure</span>
         </h2>
-        <p class="tc">系統透過 Session State 嚴謹控管三部曲引導介面，並結合後端 JSON Schema 與雙流程工作流藍圖，達成 100% 封閉式培訓合規閉環：</p>
-        <p class="en">Enforcing a strict three-stage Session State interface paired with JSON Schema validation and two-stage workflow blueprints to achieve a 100% closed-loop induction audit trail:</p>
-
         <div class="flow-grid">
           <div class="flow-node">
             <div class="flow-step"><span class="tc">步驟 01 • 門禁驗證</span><span class="en">Step 01 • Access Gate</span></div>
@@ -702,26 +954,53 @@
             <p class="flow-desc"><span class="tc">支援專屬連結 <code>?key=...</code> 直入或通行碼核對，完全杜絕原始碼硬編碼明文密碼。</span><span class="en">Supports direct URL key (<code>?key=...</code>) or manual passcode verified solely against Cloud Secrets.</span></p>
           </div>
           <div class="flow-node">
-            <div class="flow-step"><span class="tc">步驟 02 • 入職考核</span><span class="en">Step 02 • Part I Quiz</span></div>
-            <div class="flow-title"><span class="tc">規章考核與即時評分</span><span class="en">Policy Quiz & Grading</span></div>
-            <p class="flow-desc"><span class="tc">核對隔離題庫答案，即時計算得分與 75%（15/20 分）合格門檻，強制勾選 PICS 聲明。</span><span class="en">Grades against isolated Secrets bank with 75% (15/20) pass threshold and mandatory PICS consent.</span></p>
+            <div class="flow-step"><span class="tc">步驟 02 • 第一部分</span><span class="en">Step 02 • Part I Quiz</span></div>
+            <div class="flow-title"><span class="tc">20 分制多題型考核</span><span class="en">20-Pt Multi-Type Quiz</span></div>
+            <p class="flow-desc"><span class="tc">涵蓋單選、多選與群組配對題型，強制勾選誠信聲明，達 ≥15 分（75%）判定合格。</span><span class="en">Supports single, multiple, and group-matching items with mandatory consent and 15/20 (75%) pass gate.</span></p>
           </div>
           <div class="flow-node">
-            <div class="flow-step"><span class="tc">步驟 03 • 問卷調研</span><span class="en">Step 03 • Part II Survey</span></div>
-            <div class="flow-title"><span class="tc">滿意度與 ESG 活動採樣</span><span class="en">Satisfaction & ESG</span></div>
-            <p class="flow-desc"><span class="tc">收集 1–5 分培訓評估、康體／義工參與意願及開放式文化建議，回饋企業持續改進。</span><span class="en">Collects 1–5 training ratings, wellness/volunteering preferences, and open culture feedback.</span></p>
+            <div class="flow-step"><span class="tc">步驟 03 • 第二部分</span><span class="en">Step 03 • Part II Survey</span></div>
+            <div class="flow-title"><span class="tc">滿意度與 ESG 問卷</span><span class="en">Full Feedback Survey</span></div>
+            <p class="flow-desc"><span class="tc">即時顯示成績，引導填寫三組評估、運動／義工愛好及開放式文化建議。</span><span class="en">Displays instant score and collects training ratings, sports/volunteering preferences, and culture feedback.</span></p>
           </div>
           <div class="flow-node">
-            <div class="flow-step"><span class="tc">步驟 04 • 受控存證</span><span class="en">Step 04 • Controlled PDF</span></div>
+            <div class="flow-step"><span class="tc">步驟 04 • 第三部分</span><span class="en">Step 04 • Controlled PDF</span></div>
             <div class="flow-title"><span class="tc">記憶體即時繪製報告</span><span class="en">In-Memory PDF Render</span></div>
-            <p class="flow-desc"><span class="tc">嵌入 HKT (UTC+8) 時間戳、<code>DEMO-HR-REC-2026-V1</code> 編號與法定合規聲明，零磁碟落盤。</span><span class="en">Embeds HKT (UTC+8) timestamp, <code>DEMO-HR-REC-2026-V1</code> ID, and legal notice in RAM only.</span></p>
+            <p class="flow-desc"><span class="tc">嵌入 HKT (UTC+8) 時間戳、<code>DEMO-HR-REC-2026-V1</code> 編號與聲明，零磁碟落盤。</span><span class="en">Embeds HKT (UTC+8) timestamp, <code>DEMO-HR-REC-2026-V1</code> ID, and notice strictly in RAM.</span></p>
           </div>
           <div class="flow-node active">
             <div class="flow-step"><span class="tc">步驟 05 • 歸檔閉環</span><span class="en">Step 05 • Audit Closure</span></div>
-            <div class="flow-title"><span class="tc">加密直寄與異常追蹤</span><span class="en">SMTP & Retrain Routing</span></div>
-            <p class="flow-desc"><span class="tc">經 TLS SMTP 直寄 HR 歸檔；若得分低於 75%，<code>Flow2</code> 自動觸發 7 個工作天內補考任務。</span><span class="en">Dispatches via TLS SMTP to HR; scores below 75% trigger <code>Flow2</code> 7-day retraining follow-up.</span></p>
+            <div class="flow-title"><span class="tc">一鍵直寄與異常追蹤</span><span class="en">SMTP & Retrain Routing</span></div>
+            <p class="flow-desc"><span class="tc">經 TLS SMTP 直寄 HR 並附防重複鎖；低於 75% 由 <code>Flow2</code> 自動觸發 7 天補考任務。</span><span class="en">Dispatches via TLS SMTP with dedup lock; scores below 75% trigger <code>Flow2</code> 7-day retraining follow-up.</span></p>
           </div>
         </div>
+      </section>
+
+      <!-- 互動式三部曲完整系統模擬器 -->
+      <section class="card" id="simulatorSection">
+        <h2>
+          <span class="tc">🧪 互動式三部曲系統模擬器（1:1 還原 Streamlit 流程）</span>
+          <span class="en">🧪 Interactive 3-Step App Simulator (1:1 Streamlit Workflow Replica)</span>
+        </h2>
+        <p class="tc">以下完整重現 <code>app.py</code> 的三階段互動操作：包含 16 個組別、<strong>單選＋多選＋群組配對（滿分 20 分，15 分合格）</strong>、完整三節滿意度與興趣問卷、即時 <code>DEMO-HR-REC-2026-V1</code> 受控報告渲染及模擬 TLS SMTP 一鍵送出。</p>
+        <p class="en">Experience the exact 3-step workflow of <code>app.py</code>: all 16 departments, <strong>single + multiple + group-matching questions (20 pts max, ≥15 pts pass)</strong>, full 3-section survey, live <code>DEMO-HR-REC-2026-V1</code> controlled report rendering, and simulated one-click TLS SMTP dispatch.</p>
+
+        <div class="stepper" id="stepperBar">
+          <div class="step-pill current" data-step="1">
+            <span class="tc">① 第一部分：入職培訓測驗</span>
+            <span class="en">① Part I: Onboarding Quiz</span>
+          </div>
+          <div class="step-pill" data-step="2">
+            <span class="tc">② 第二部分：得分與問卷調查</span>
+            <span class="en">② Part II: Score & Survey</span>
+          </div>
+          <div class="step-pill" data-step="3">
+            <span class="tc">③ 第三部分：一鍵發送與下載</span>
+            <span class="en">③ Part III: Dispatch & Download</span>
+          </div>
+        </div>
+
+        <div class="sim-shell" id="simAppRoot"></div>
       </section>
 
       <!-- 業務治理對照矩陣 -->
@@ -751,126 +1030,29 @@
                 <td><strong><span class="tc">二、入職知識考核</span><span class="en">2. Policy Assessment</span></strong></td>
                 <td><span class="role-badge"><span class="tc">新入職員工</span><span class="en">New Hire</span></span></td>
                 <td><span class="tc">隔離題庫與確定性計分</span><span class="en">Isolated Bank & Scoring</span></td>
-                <td><span class="tc">完成規章制度、品質與誠信測驗並勾選 PICS 聲明，即時判定 ≥75%（15/20 分）合格狀態，滿足 ISO 9001 Clause 7.2。</span><span class="en">Evaluates policy & integrity knowledge with mandatory PICS consent and 75% (15/20) pass threshold per ISO 9001 Clause 7.2.</span></td>
+                <td><span class="tc">支援單選、多選與群組配對題型並強制勾選誠信聲明，即時判定 ≥75%（15/20 分）合格狀態，滿足 ISO 9001 Clause 7.2。</span><span class="en">Evaluates single, multiple, and group-matching items with mandatory consent and 75% (15/20) pass rule per ISO 9001 Clause 7.2.</span></td>
               </tr>
               <tr>
                 <td><strong><span class="tc">三、滿意度與 ESG 調研</span><span class="en">3. Engagement Survey</span></strong></td>
                 <td><span class="role-badge"><span class="tc">新入職員工</span><span class="en">New Hire</span></span></td>
                 <td>Streamlit Form + Schema</td>
-                <td><span class="tc">採樣培訓評價、運動及公益活動意願與開放建議，資料結構對應 <code>onboarding_assessment_schema.json</code>，支援 ISO 45001 與 ESG 指標。</span><span class="en">Captures training ratings, wellness/volunteering interests, and open suggestions validated against <code>onboarding_assessment_schema.json</code>.</span></td>
+                <td><span class="tc">採樣培訓評價、運動及公益活動意願與 5 項開放建議，結構對應 <code>onboarding_assessment_schema.json</code>，支援 ISO 45001 與 ESG 指標。</span><span class="en">Captures training ratings, sports/volunteering interests, and 5 open suggestions validated against <code>onboarding_assessment_schema.json</code>.</span></td>
               </tr>
               <tr>
                 <td><strong><span class="tc">四、受控 PDF 存證</span><span class="en">4. PDF Synthesis</span></strong></td>
                 <td><span class="role-badge"><span class="tc">無狀態引擎</span><span class="en">Stateless Engine</span></span></td>
                 <td>FPDF2 (Noto Sans TC)</td>
-                <td><span class="tc">於記憶體即時生成 <code>DEMO-HR-REC-2026-V1</code> 受控報告，附帶 HKT 時間戳與香港 PDPO 聲明，完畢即釋放暫存。</span><span class="en">Renders <code>DEMO-HR-REC-2026-V1</code> vector PDF in RAM with HKT timestamp and PDPO notice; zero disk persistence.</span></td>
+                <td><span class="tc">於記憶體即時生成 <code>DEMO-HR-REC-2026-V1</code> 受控報告，經 <code>clean_text()</code> 消毒並嵌入 HKT 時間戳與聲明，完畢即釋放暫存。</span><span class="en">Renders <code>DEMO-HR-REC-2026-V1</code> vector PDF in RAM with <code>clean_text()</code> sanitization, HKT timestamp, and PDPO notice.</span></td>
               </tr>
               <tr>
                 <td><strong><span class="tc">五、加密送達與稽核</span><span class="en">5. Dispatch & Audit</span></strong></td>
                 <td><span class="role-badge"><span class="tc">人力資源組 (HRD)</span><span class="en">HR Compliance Team</span></span></td>
                 <td>SMTP STARTTLS + Flows</td>
-                <td><span class="tc">經 Port 587 TLS 直送 HR 郵箱（<code>Flow1</code>），依 <code>Flow2</code> 分流存入受控人事檔案庫或標記不合格補考追蹤。</span><span class="en">Delivers over Port 587 TLS to HR (<code>Flow1</code>), routing via <code>Flow2</code> to restricted IMS archive or 7-day retraining follow-up.</span></td>
+                <td><span class="tc">經 Port 587 TLS 直送 HR 郵箱（<code>Flow1</code>），依 <code>Flow2</code> 分流存入受控人事檔案庫或標記 7 個工作天內補考追蹤，另附本地下載與 WhatsApp 備用通知。</span><span class="en">Delivers over Port 587 TLS to HR (<code>Flow1</code>), routing via <code>Flow2</code> to restricted IMS archive or 7-day retraining follow-up, plus local backup & WhatsApp fallback.</span></td>
               </tr>
             </tbody>
           </table>
         </div>
-      </section>
-
-      <!-- 互動式入職考核、問卷與受控紀錄模擬器 -->
-      <section class="card">
-        <h2>
-          <span class="tc">🧮 互動式入職考核、問卷採樣與受控 PDF 存證模擬器</span>
-          <span class="en">🧮 Interactive Onboarding Quiz, Survey & Controlled Record Simulator</span>
-        </h2>
-        <p class="tc">在此直接體驗第一部分規章測驗（每題 5 分、滿分 20 分、15 分／75% 合格）、第二部分滿意度與 ESG 滑桿、輸入消毒防注入（試著在姓名輸入 <code>/ * ? <></code>），以及即時聯動的 <code>DEMO-HR-REC-2026-V1</code> 存證與 <code>Flow2</code> 分流預覽：</p>
-        <p class="en">Test Part I onboarding policy scoring (4 items × 5 pts = 20 pts; ≥15 pts / 75% to pass), Part II satisfaction & ESG sliders, filename sanitization (try typing <code>/ * ? <></code> in Name), PICS consent gate, and live <code>DEMO-HR-REC-2026-V1</code> & <code>Flow2</code> routing preview:</p>
-
-        <div class="sim-toolbar">
-          <div class="sim-field">
-            <label for="simName"><span class="tc">員工姓名 *（測試輸入消毒）</span><span class="en">Employee Name * (Tests Sanitization)</span></label>
-            <input type="text" id="simName" value="陳大文" maxlength="20" />
-          </div>
-          <div class="sim-field">
-            <label for="simEmpId"><span class="tc">職員編號 *</span><span class="en">Employee ID *</span></label>
-            <input type="text" id="simEmpId" value="EMP-2026-0188" maxlength="20" />
-          </div>
-          <div class="sim-field">
-            <label for="simDept"><span class="tc">所屬組別 *</span><span class="en">Department *</span></label>
-            <select id="simDept"></select>
-          </div>
-        </div>
-
-        <div class="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th style="width: 60px;">#</th>
-                <th><span class="tc">第一部分：入職規章與管治考核試題（滿分 20 分，15 分／75% 合格）</span><span class="en">Part I: Onboarding Policy & Governance Quiz (20 pts max; ≥15 pts / 75% Pass)</span></th>
-                <th style="width: 38%;"><span class="tc">模擬作答選項</span><span class="en">Simulated Employee Selection</span></th>
-                <th style="width: 78px; text-align: center;"><span class="tc">判定</span><span class="en">Check</span></th>
-              </tr>
-            </thead>
-            <tbody id="quizSimBody"></tbody>
-          </table>
-        </div>
-
-        <div class="survey-row">
-          <div class="slider-field">
-            <div class="slider-head">
-              <span><span class="tc">第二部分（一）：本次入職培訓整體滿意度</span><span class="en">Part II (1): Overall Onboarding Training Satisfaction</span></span>
-              <span class="slider-val" id="valSat">5 / 5</span>
-            </div>
-            <input type="range" id="simSat" min="1" max="5" step="1" value="5" />
-          </div>
-          <div class="slider-field">
-            <div class="slider-head">
-              <span><span class="tc">第二部分（二）：企業義工與康體 ESG 活動參與意願</span><span class="en">Part II (2): Corporate Volunteering & ESG Wellness Interest</span></span>
-              <span class="slider-val" id="valEsg">4 / 5</span>
-            </div>
-            <input type="range" id="simEsg" min="1" max="5" step="1" value="4" />
-          </div>
-        </div>
-
-        <div class="sim-actions">
-          <label class="decl-label">
-            <input type="checkbox" id="simDecl" checked />
-            <span class="tc">本人確認上述資料正確，由本人獨立完成測驗，並同意《個人資料收集聲明》(PICS)。 *</span>
-            <span class="en">I confirm the details above are accurate, completed independently, and accept the PICS privacy notice. *</span>
-          </label>
-          <div class="preset-group">
-            <button type="button" class="btn-mini" id="btnAllPass">
-              <span class="tc">✅ 模擬滿分合格 (20/20)</span>
-              <span class="en">✅ Simulate Full Pass (20/20)</span>
-            </button>
-            <button type="button" class="btn-mini" id="btnTestFail">
-              <span class="tc">⚠️ 模擬不合格 (10/20)</span>
-              <span class="en">⚠️ Simulate Fail (10/20)</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="status-banner" id="simBanner"></div>
-
-        <div class="kpi-grid">
-          <div class="kpi-box">
-            <div class="kpi-label"><span class="tc">考核得分</span><span class="en">Quiz Score</span></div>
-            <div class="kpi-value" id="kpiScore">20 / 20</div>
-          </div>
-          <div class="kpi-box">
-            <div class="kpi-label"><span class="tc">合格率</span><span class="en">Pass Rate</span></div>
-            <div class="kpi-value" id="kpiRate">100.0%</div>
-          </div>
-          <div class="kpi-box">
-            <div class="kpi-label"><span class="tc">評定結果</span><span class="en">Assessment Status</span></div>
-            <div class="kpi-value pass-text" id="kpiStatus">PASS</div>
-          </div>
-          <div class="kpi-box">
-            <div class="kpi-label"><span class="tc">受控文件編號</span><span class="en">Controlled Doc ID</span></div>
-            <div class="kpi-value">DEMO-HR-REC-2026-V1</div>
-          </div>
-        </div>
-
-        <div class="record-preview" id="recordPreview"></div>
       </section>
 
       <!-- 技術亮點與合規工程實踐 -->
@@ -925,97 +1107,227 @@
         <span class="en">© 2026 Enterprise Demo Framework. Released under the MIT License.</span>
       </p>
       <p class="disclaimer">
-        <span class="tc"><strong>免責聲明：</strong>本專案為企業人力資源合規與零留存架構研究而設之通用示範（Enterprise Demo），文中所使用之示範姓名、職員編號、受控編號及郵箱端點均為虛擬或脫敏佔位符。</span>
-        <span class="en"><strong>Disclaimer:</strong> This project is a generic enterprise demo created for HR governance and zero-data-retention architectural research. All employee names, IDs, document numbers, and email endpoints shown are fictional placeholders.</span>
+        <span class="tc"><strong>免責聲明：</strong>本專案為企業人力資源合規與零留存架構研究而設之通用示範（Enterprise Demo），文中所使用之示範姓名、職員編號、受控編號、聯絡號碼及郵箱端點均為虛擬或脫敏佔位符。</span>
+        <span class="en"><strong>Disclaimer:</strong> This project is a generic enterprise demo created for HR governance and zero-data-retention architectural research. All employee names, IDs, document numbers, phone numbers, and email endpoints shown are fictional placeholders.</span>
       </p>
     </footer>
   </div>
 
   <script>
     (function () {
-      const departments = [
+      const DEPT_LIST = [
+        { val: "", tc: "請選擇組別", en: "Select Department" },
+        { val: "mgmt", tc: "管理層", en: "Management" },
+        { val: "office", tc: "寫字樓", en: "General Office" },
         { val: "hr", tc: "人力資源組", en: "Human Resources" },
         { val: "admin", tc: "行政組", en: "Administration" },
-        { val: "engineering", tc: "工程組", en: "Engineering Team" },
-        { val: "project", tc: "項目組", en: "Project Team" },
-        { val: "construction", tc: "施工組", en: "Construction Team" },
+        { val: "qs", tc: "計量組", en: "Quantity Surveying" },
+        { val: "plan", tc: "規劃驗證組", en: "Planning & Verification" },
+        { val: "proc", tc: "發判組", en: "Procurement & Subcontracting" },
+        { val: "proj", tc: "項目組", en: "Project Team" },
+        { val: "site", tc: "施工組", en: "Construction Team" },
+        { val: "eng", tc: "工程組", en: "Engineering Team" },
         { val: "sed", tc: "安全及環保組", en: "Safety & Environmental Dept" },
         { val: "audit", tc: "營運審計組", en: "Operations Audit" },
-        { val: "finance", tc: "會計組", en: "Finance & Accounting" }
+        { val: "acct", tc: "會計組", en: "Accounting" },
+        { val: "mc", tc: "物控組", en: "Material Control" },
+        { val: "wh", tc: "倉管組", en: "Warehouse" },
+        { val: "other", tc: "其他", en: "Others" }
       ];
 
-      // 4 core onboarding items × 5 pts each = 20 pts total (≥15 pts / 75% to pass)
-      const onboardingQuestions = [
+      const SPORTS_OPTS = [
+        { val: "football", tc: "足球", en: "Football" },
+        { val: "basketball", tc: "籃球", en: "Basketball" },
+        { val: "swimming", tc: "游泳", en: "Swimming" },
+        { val: "running", tc: "跑步", en: "Running" },
+        { val: "cycling", tc: "單車", en: "Cycling" },
+        { val: "badminton", tc: "羽毛球", en: "Badminton" },
+        { val: "dragonboat", tc: "龍舟", en: "Dragon Boat" },
+        { val: "yoga", tc: "瑜伽", en: "Yoga" },
+        { val: "none", tc: "沒有運動習慣", en: "No regular sports" }
+      ];
+
+      const VOL_OPTS = [
+        { val: "env", tc: "環保活動", en: "Environmental Protection" },
+        { val: "comm", tc: "社區服務", en: "Community Service" },
+        { val: "edu", tc: "教育支援", en: "Education Support" },
+        { val: "health", tc: "健康推廣活動", en: "Health Promotion" },
+        { val: "charity", tc: "慈善募捐", en: "Charity Fundraising" },
+        { val: "animal", tc: "動物保護", en: "Animal Welfare" },
+        { val: "culture", tc: "文化交流", en: "Cultural Exchange" },
+        { val: "none", tc: "沒有", en: "None" }
+      ];
+
+      // Exact 3 question types matching app.py: single (5 pts) + multiple (10 pts) + group_single (5 pts) = 20 pts
+      const QUIZ_BANK = [
         {
-          id: 1,
-          points: 5,
-          tc: "處理同事或客戶之個人資料時，應遵循哪項香港《個人資料（私隱）條例》(PDPO) 核心原則？",
-          en: "Which Hong Kong PDPO principle governs handling colleague or client personal data?",
+          id: "q1",
+          type: "single",
+          tc: "1. 處理同事或客戶之個人資料時，應遵循哪項香港《個人資料（私隱）條例》(PDPO) 核心原則？",
+          en: "1. Which Hong Kong PDPO principle applies when handling colleague or client personal data?",
           options: [
-            { tc: "A. 僅於收集目的範圍內合法使用，並採取安全防護防止外洩", en: "A. Use strictly for the stated collection purpose with security safeguards" },
-            { tc: "B. 可自由下載至私人手機作日後備份", en: "B. Freely download onto personal phones for backup" },
-            { tc: "C. 可於未經授權下與外部承辦商共享", en: "C. Share with external vendors without authorization" }
+            { val: "a", tc: "僅於聲明之收集目的範圍內合法使用，並採取安全防護措施", en: "Use strictly within the stated collection purpose with security safeguards" },
+            { val: "b", tc: "可自由下載至私人手機作日後參考", en: "Freely download to personal devices for future reference" },
+            { val: "c", tc: "可於未經授權下與外部第三方分享", en: "Share with external third parties without authorization" }
           ],
-          answerIdx: 0
+          answer: "a"
         },
         {
-          id: 2,
-          points: 5,
-          tc: "根據企業誠信及反貪政策，若員工於公務期間獲業務夥伴致贈禮品或利益，應如何處理？",
-          en: "Under corporate integrity and anti-bribery policy, how should a business gift offer be handled?",
+          id: "q2",
+          type: "single",
+          tc: "2. 根據企業反貪及誠信政策，若於公務期間獲業務夥伴致贈禮品或利益，應如何處理？",
+          en: "2. Under corporate anti-bribery policy, how should a business gift offer be handled?",
           options: [
-            { tc: "A. 只要金額不大即可私下收受無須匯報", en: "A. Accept privately without reporting if the value seems small" },
-            { tc: "B. 禮貌婉拒或依公司規定即時進行書面利益申報並交由管理層批示", en: "B. Politely decline or promptly file a formal declaration for management approval" },
-            { tc: "C. 轉交部門同事平分即可免除申報責任", en: "C. Split the gift among teammates to bypass declaration" }
+            { val: "a", tc: "金額較小即可私下收受無須申報", en: "Accept privately if the amount appears minor" },
+            { val: "b", tc: "禮貌婉拒或即時依公司指引作出書面申報並待管理層批示", en: "Politely decline or file a prompt written declaration for management approval" },
+            { val: "c", tc: "與同組同事平分即可免除申報責任", en: "Share with teammates to waive declaration requirements" }
           ],
-          answerIdx: 1
+          answer: "b"
         },
         {
-          id: 3,
-          points: 5,
-          tc: "在 ISO 9001 / 45001 綜合管理體系（IMS）下，新員工完成入職培訓考核紀錄的主要作用是什麼？",
-          en: "Under an ISO 9001 / 45001 Integrated Management System (IMS), what is the primary role of onboarding records?",
+          id: "q3",
+          type: "single",
+          tc: "3. 在 ISO 9001 / 45001 綜合管理體系下，新員工入職培訓考核紀錄之主要合規價值為何？",
+          en: "3. Under an ISO 9001 / 45001 IMS, what is the primary compliance value of onboarding quiz records?",
           options: [
-            { tc: "A. 僅作內部參考，無須保存時間戳或版本編號", en: "A. Informal reference only, requiring no timestamps or version IDs" },
-            { tc: "B. 作為員工理解品質、安全方針與法定合規要求之受控審計憑證", en: "B. Controlled audit evidence verifying staff competence in quality, safety, and compliance" },
-            { tc: "C. 用於取代現場安全督導與日常風險評估", en: "C. Replacing on-site safety supervision and daily risk assessments" }
+            { val: "a", tc: "僅作非正式參考，無須版本編號或時間戳", en: "Informal reference only without document IDs or timestamps" },
+            { val: "b", tc: "作為員工掌握品質、職安健方針與合規要求之受控審計憑證", en: "Controlled audit evidence verifying staff competence in quality, safety, and compliance" },
+            { val: "c", tc: "可完全取代日常現場督導與風險評估", en: "Replaces daily operational supervision and risk assessments" }
           ],
-          answerIdx: 1
+          answer: "b"
         },
         {
-          id: 4,
-          points: 5,
-          tc: "當發現疑似企業資訊安全事件（例如釣魚電郵或帳密外洩風險）時，員工應採取哪項措施？",
-          en: "What immediate action is required upon noticing a suspected security incident (e.g., phishing email)?",
+          id: "q4",
+          type: "single",
+          tc: "4. 收到疑似釣魚電郵或察覺系統帳密外洩風險時，員工應即時採取哪項措施？",
+          en: "4. What immediate action is required upon receiving a suspected phishing email?",
           options: [
-            { tc: "A. 切勿點擊可疑連結或轉發，並立即通報 IT 及相關管理部門跟進", en: "A. Do not click or forward links; report immediately to IT and management" },
-            { tc: "B. 先點擊連結測試是否為真實系統通知", en: "B. Click the link first to verify whether it is legitimate" },
-            { tc: "C. 直接刪除電郵且不通知任何人員", en: "C. Delete the email silently without alerting anyone" }
+            { val: "a", tc: "切勿點擊連結或轉發，並立即通報管理層／資訊保安負責人員", en: "Do not click or forward links; report immediately to management / IT security" },
+            { val: "b", tc: "先點擊連結測試是否為真實系統訊息", en: "Click the link first to test whether it is genuine" },
+            { val: "c", tc: "靜默刪除電郵而不向任何人匯報", en: "Delete silently without notifying anyone" }
           ],
-          answerIdx: 0
+          answer: "a"
+        },
+        {
+          id: "q5",
+          type: "single",
+          tc: "5. 於辦公場所或工地發現險生事故（Near Miss）或潛在安全隱患時，正確做法為何？",
+          en: "5. What is the proper response upon observing a Near Miss or workplace hazard?",
+          options: [
+            { val: "a", tc: "無人受傷即無須記錄或匯報", en: "No reporting needed if nobody was injured" },
+            { val: "b", tc: "待季度檢討會議時再作口頭分享", en: "Wait until the quarterly meeting to mention it verbally" },
+            { val: "c", tc: "即時提醒周邊同事避險並向直屬主管及安全及環保組通報", en: "Warn nearby colleagues immediately and report to supervisor & SED" }
+          ],
+          answer: "c"
+        },
+        {
+          id: "q6",
+          type: "multiple",
+          tc: "6. 【多選題・每項正確 1 分，共 5 分】以下哪些屬於「資訊安全與私隱保護」正確日常守則？",
+          en: "6. [Multiple Choice • 1 pt each, 5 pts total] Which practices align with Information Security & Privacy standards?",
+          options: [
+            { val: "m1", tc: "離開工作站時立即鎖定電腦螢幕", en: "Lock workstation screens immediately when stepping away" },
+            { val: "m2", tc: "啟用雙重驗證（MFA）及定期更新高強度密碼", en: "Enable MFA and maintain strong passwords" },
+            { val: "m3", tc: "僅經公司授權加密通道傳送機密人事或財務檔案", en: "Transmit confidential HR/finance files only over encrypted channels" },
+            { val: "m4", tc: "貫徹無紙化與清桌政策（Clean Desk Policy）", en: "Follow paperless handling and Clean Desk Policy" },
+            { val: "m5", tc: "將機密密碼與題庫隔離存放於後端 Secrets 而非公開代碼", en: "Isolate secrets and credentials in backend vaults rather than source code" },
+            { val: "m_bad", tc: "將共用帳號密碼貼在顯示器邊框方便同事查閱", en: "Stick shared passwords on monitor bezels for team convenience" }
+          ],
+          answer: ["m1", "m2", "m3", "m4", "m5"]
+        },
+        {
+          id: "q7",
+          type: "multiple",
+          tc: "7. 【多選題・每項正確 1 分，共 5 分】以下哪些屬於企業推動 ESG 與健康友善職場之核心方向？",
+          en: "7. [Multiple Choice • 1 pt each, 5 pts total] Which initiatives support Corporate ESG & a Healthy Workplace?",
+          options: [
+            { val: "e1", tc: "以電子化無紙表單取代傳統紙本考核，減少耗材碳排", en: "Replace paper quizzes with digital forms to cut paper waste" },
+            { val: "e2", tc: "鼓勵參與企業義工、環保及社區支援公益活動", en: "Encourage corporate volunteering, green, and community activities" },
+            { val: "e3", tc: "舉辦多元化康體運動以促進員工身心健康與工作生活平衡", en: "Host sports and wellness programs for work-life balance" },
+            { val: "e4", tc: "建立透明意見回饋渠道，持續優化入職培訓與公司文化", en: "Maintain transparent feedback channels to improve onboarding & culture" },
+            { val: "e5", tc: "恪守誠信管治、職安健法規及平等共融原則", en: "Uphold ethical governance, OHS laws, and workplace inclusion" },
+            { val: "e_bad", tc: "為節省時間而跳過所有新員工安全與合規入職評估", en: "Skip all new-hire safety and compliance induction checks to save time" }
+          ],
+          answer: ["e1", "e2", "e3", "e4", "e5"]
+        },
+        {
+          id: "q8",
+          type: "group_single",
+          tc: "8. 【群組配對題・每小題 1 分，共 5 分】請為以下營運合規事項配對最合適之對口組別：",
+          en: "8. [Group Matching • 1 pt per item, 5 pts total] Match each operational matter to the primary responsible department:",
+          sub_questions: [
+            { sub_id: "g1", tc: "8.1 新員工合約、入職培訓紀錄及假期制度查詢", en: "8.1 Employment contracts, induction records & leave policy", answer: "hr" },
+            { sub_id: "g2", tc: "8.2 職安健防護裝備、工地安全巡查及環保合規", en: "8.2 PPE standards, site safety audits & environmental compliance", answer: "sed" },
+            { sub_id: "g3", tc: "8.3 營運報銷單據核實及供應商款項結算", en: "8.3 Expense claim verification & vendor payment settlement", answer: "acct" },
+            { sub_id: "g4", tc: "8.4 內部程序合規抽查及管理體系（IMS）審核", en: "8.4 Internal compliance checks & IMS management audits", answer: "audit" },
+            { sub_id: "g5", tc: "8.5 辦公室物資採購、門禁卡及日常行政支援", en: "8.5 Office supplies procurement, access cards & admin support", answer: "admin" }
+          ],
+          match_options: [
+            { val: "", tc: "請選擇組別", en: "Select Department" },
+            { val: "hr", tc: "人力資源組", en: "Human Resources" },
+            { val: "sed", tc: "安全及環保組", en: "Safety & Environmental Dept" },
+            { val: "acct", tc: "會計組", en: "Accounting" },
+            { val: "audit", tc: "營運審計組", en: "Operations Audit" },
+            { val: "admin", tc: "行政組", en: "Administration" }
+          ]
         }
       ];
 
-      const defaultNames = { tc: "陳大文", en: "Chan Tai Man" };
-      const selectedIdx = [0, 1, 1, 0];
+      function createInitialState() {
+        return {
+          step: 1,
+          errorMsg: "",
+          basic: {
+            name: "陳大文",
+            emp_id: "EMP-2026-0188",
+            dept: "hr",
+            declaration: true
+          },
+          answers: {
+            q1: "a",
+            q2: "b",
+            q3: "b",
+            q4: "a",
+            q5: "c",
+            q6: ["m1", "m2", "m3", "m4", "m5"],
+            q7: ["e1", "e2", "e3", "e4", "e5"],
+            q8: { g1: "hr", g2: "sed", g3: "acct", g4: "audit", g5: "admin" }
+          },
+          quizResult: null,
+          submitTime: "",
+          survey: {
+            s1_q1: 5,
+            s1_q2: 5,
+            s1_q3: 5,
+            s1_q4: "",
+            s2_q1: 4,
+            s2_q2: ["cycling", "running"],
+            s2_q2_other: "",
+            s2_q3: 4,
+            s2_q4: ["env", "comm"],
+            s2_q4_other: "",
+            s2_q5: 3,
+            s2_q6: "",
+            s2_q7: "",
+            s3_q1: "",
+            s3_q2: "",
+            s3_q3: "",
+            s3_q4: "",
+            s3_q5: ""
+          },
+          emailSent: false,
+          dispatchLog: ""
+        };
+      }
 
-      const simName = document.getElementById("simName");
-      const simEmpId = document.getElementById("simEmpId");
-      const simDept = document.getElementById("simDept");
-      const simSat = document.getElementById("simSat");
-      const simEsg = document.getElementById("simEsg");
-      const valSat = document.getElementById("valSat");
-      const valEsg = document.getElementById("valEsg");
-      const simDecl = document.getElementById("simDecl");
-      const quizSimBody = document.getElementById("quizSimBody");
-      const simBanner = document.getElementById("simBanner");
-      const recordPreview = document.getElementById("recordPreview");
+      let state = createInitialState();
+      const root = document.getElementById("simAppRoot");
+      const stepperBar = document.getElementById("stepperBar");
 
-      function isEnglish() {
+      function isEn() {
         return document.body.classList.contains("lang-en");
       }
 
-      // Unicode-escaped replacements prevent copy-paste HTML entity decoding issues
       function escapeHtml(str) {
         return String(str)
           .replace(/\u0026/g, "\u0026amp;")
@@ -1025,9 +1337,9 @@
           .replace(/\u0027/g, "\u0026#39;");
       }
 
-      function sanitizeInput(val) {
-        const cleaned = String(val || "").replace(/[\r\n\t]/g, " ").trim();
-        return cleaned || (isEnglish() ? "N/A" : "無");
+      function cleanText(val) {
+        const cleaned = String(val || "").replace(/[\r\n\t]+/g, " ").trim();
+        return cleaned || (isEn() ? "None" : "無");
       }
 
       function sanitizeFilename(val) {
@@ -1039,190 +1351,658 @@
         const utcMs = now.getTime() + now.getTimezoneOffset() * 60000;
         const hkt = new Date(utcMs + 8 * 3600000);
         const pad = (n) => String(n).padStart(2, "0");
-        return `${hkt.getFullYear()}-${pad(hkt.getMonth() + 1)}-${pad(hkt.getDate())} ${pad(hkt.getHours())}:${pad(hkt.getMinutes())}:${pad(hkt.getSeconds())} (UTC+8 HKT)`;
+        return `${hkt.getFullYear()}-${pad(hkt.getMonth() + 1)}-${pad(hkt.getDate())} ${pad(hkt.getHours())}:${pad(hkt.getMinutes())}:${pad(hkt.getSeconds())}`;
       }
 
-      function populateDepartments() {
-        const prev = simDept.value || "hr";
-        const en = isEnglish();
-        simDept.innerHTML = "";
-        departments.forEach((d) => {
-          const opt = document.createElement("option");
-          opt.value = d.val;
-          opt.textContent = en ? d.en : d.tc;
-          simDept.appendChild(opt);
+      function getDeptLabel(val) {
+        const found = DEPT_LIST.find((d) => d.val === val);
+        return found ? (isEn() ? found.en : found.tc) : (isEn() ? "None" : "無");
+      }
+
+      function mapChipLabels(values, list, otherText) {
+        const en = isEn();
+        const labels = values
+          .map((v) => {
+            const item = list.find((x) => x.val === v);
+            return item ? (en ? item.en : item.tc) : "";
+          })
+          .filter(Boolean);
+        let str = labels.join(", ");
+        const cleanOther = String(otherText || "").trim();
+        if (cleanOther) {
+          str = str ? `${str} (${cleanOther})` : cleanOther;
+        }
+        return str || (en ? "None" : "無");
+      }
+
+      function calculateScore() {
+        let score = 0;
+        const total = 20;
+        QUIZ_BANK.forEach((q) => {
+          if (q.type === "single") {
+            if (state.answers[q.id] === q.answer) score += 1;
+          } else if (q.type === "multiple") {
+            const picked = state.answers[q.id] || [];
+            let correctCount = 0;
+            let wrongCount = 0;
+            picked.forEach((opt) => {
+              if (q.answer.includes(opt)) correctCount += 1;
+              else wrongCount += 1;
+            });
+            score += Math.max(0, correctCount - wrongCount);
+          } else if (q.type === "group_single") {
+            const subMap = state.answers[q.id] || {};
+            q.sub_questions.forEach((sq) => {
+              if (subMap[sq.sub_id] === sq.answer) score += 1;
+            });
+          }
         });
-        simDept.value = prev;
+        const passRate = (score / total) * 100;
+        return { score, total, pass_rate: passRate, is_pass: score >= 15 };
       }
 
-      function syncLanguageControls() {
-        const en = isEnglish();
-        document.documentElement.lang = en ? "en" : "zh-HK";
+      function updateStepper() {
+        stepperBar.querySelectorAll(".step-pill").forEach((pill) => {
+          const s = Number(pill.dataset.step);
+          pill.classList.remove("current", "done");
+          if (s === state.step) pill.classList.add("current");
+          else if (s < state.step) pill.classList.add("done");
+        });
+      }
 
-        if (en && simName.value === defaultNames.tc) {
-          simName.value = defaultNames.en;
-        } else if (!en && simName.value === defaultNames.en) {
-          simName.value = defaultNames.tc;
+      function buildPlainTextReport() {
+        const en = isEn();
+        const r = state.quizResult;
+        const b = state.basic;
+        const s = state.survey;
+        const statusStr = r.is_pass
+          ? (en ? "PASS" : "合格 (PASS)")
+          : (en ? "FAIL" : "不合格 (FAIL)");
+        const sportsStr = mapChipLabels(s.s2_q2, SPORTS_OPTS, s.s2_q2_other);
+        const volStr = mapChipLabels(s.s2_q4, VOL_OPTS, s.s2_q4_other);
+
+        if (en) {
+          return [
+            "Enterprise Demo Framework - IMS Controlled Record",
+            "Doc ID: DEMO-HR-REC-2026-V1 | Confidential",
+            "============================================================",
+            "New Employee Onboarding Assessment & Survey Report",
+            "============================================================",
+            `Name: ${cleanText(b.name)}`,
+            `Employee ID: ${cleanText(b.emp_id)}`,
+            `Department: ${getDeptLabel(b.dept)}`,
+            `Assessment Time: ${state.submitTime} (HKT)`,
+            `Quiz Score: ${r.score} / ${r.total} (${r.pass_rate.toFixed(1)}%) - ${statusStr}`,
+            "",
+            "[Section I: Training Evaluation]",
+            `1. Overall Training Satisfaction: ${s.s1_q1} / 5`,
+            `2. Content Met Expectations: ${s.s1_q2} / 5`,
+            `3. Trainer Performance: ${s.s1_q3} / 5`,
+            `4. Areas to Improve / Add: ${cleanText(s.s1_q4)}`,
+            "",
+            "[Section II: Personal Interests & Corporate Activities]",
+            `1. Interest in Sports Activities: ${s.s2_q1} / 5`,
+            `2. Sports Preferences: ${sportsStr}`,
+            `3. Volunteering Willingness: ${s.s2_q3} / 5`,
+            `4. Preferred Community Causes: ${volStr}`,
+            `5. Interest in Co-organizing Events: ${s.s2_q5} / 5`,
+            `6. Views on Work-Life Balance: ${cleanText(s.s2_q6)}`,
+            `7. Suggestions for Future Events: ${cleanText(s.s2_q7)}`,
+            "",
+            "[Section III: Open-Ended Questions]",
+            `1. Views on Company Culture: ${cleanText(s.s3_q1)}`,
+            `2. Strengths & Improvement Areas: ${cleanText(s.s3_q2)}`,
+            `3. Additional Support / Resources Needed: ${cleanText(s.s3_q3)}`,
+            `4. Future Development Suggestions: ${cleanText(s.s3_q4)}`,
+            `5. Other Comments: ${cleanText(s.s3_q5)}`,
+            "",
+            "Declaration: Internal controlled training record confirmed by the employee. Personal data is used strictly for internal HR management under PDPO (Cap. 486) and ISO/IEC 27001 controls."
+          ].join("\n");
         }
 
-        simName.placeholder = en ? "Enter employee name" : "請輸入員工姓名";
-        simEmpId.placeholder = en ? "e.g. EMP-2026-0188" : "例如：EMP-2026-0188";
-        populateDepartments();
+        return [
+          "Enterprise Demo Framework - IMS Controlled Record",
+          "Doc ID: DEMO-HR-REC-2026-V1 | Confidential",
+          "============================================================",
+          "新員工入職培訓考核及問卷報告",
+          "============================================================",
+          `姓名：${cleanText(b.name)}`,
+          `職員編號：${cleanText(b.emp_id)}`,
+          `組別：${getDeptLabel(b.dept)}`,
+          `考核時間：${state.submitTime} (HKT)`,
+          `測驗得分：${r.score} / ${r.total} (${r.pass_rate.toFixed(1)}%) - ${statusStr}`,
+          "",
+          "一、基本培訓評估問題",
+          `1. 培訓整體滿意度：${s.s1_q1} / 5`,
+          `2. 培訓內容符合期望：${s.s1_q2} / 5`,
+          `3. 培訓師表現：${s.s1_q3} / 5`,
+          `4. 需要改進或增補內容：${cleanText(s.s1_q4)}`,
+          "",
+          "二、個人興趣及公司活動",
+          `1. 運動活動興趣：${s.s2_q1} / 5`,
+          `2. 運動愛好：${sportsStr}`,
+          `3. 義工活動意願：${s.s2_q3} / 5`,
+          `4. 公益活動興趣：${volStr}`,
+          `5. 協助籌辦活動興趣：${s.s2_q5} / 5`,
+          `6. 工作與生活平衡看法：${cleanText(s.s2_q6)}`,
+          `7. 未來公司活動建議：${cleanText(s.s2_q7)}`,
+          "",
+          "三、開放式問題",
+          `1. 對公司文化的看法：${cleanText(s.s3_q1)}`,
+          `2. 公司優勢與改進建議：${cleanText(s.s3_q2)}`,
+          `3. 希望獲得的額外支持/資源：${cleanText(s.s3_q3)}`,
+          `4. 對公司未來發展方向的建議：${cleanText(s.s3_q4)}`,
+          `5. 其他建議或意見：${cleanText(s.s3_q5)}`,
+          "",
+          "聲明：本文件為內部受控培訓紀錄，由員工本人確認填答。個人資料受香港《個人資料（私隱）條例》(Cap. 486) 及 ISO/IEC 27001 保護，僅供內部人力資源管理用途。"
+        ].join("\n");
       }
 
-      function buildQuizTable() {
-        const en = isEnglish();
-        quizSimBody.innerHTML = "";
-        onboardingQuestions.forEach((q, qIdx) => {
-          const tr = document.createElement("tr");
-          const optsHtml = q.options
-            .map((opt, oIdx) => {
-              const sel = selectedIdx[qIdx] === oIdx ? "selected" : "";
-              return `<option value="${oIdx}" ${sel}>${escapeHtml(en ? opt.en : opt.tc)}</option>`;
-            })
-            .join("");
+      function renderStep1() {
+        const en = isEn();
+        const deptOptionsHtml = DEPT_LIST.map((d) => {
+          const sel = state.basic.dept === d.val ? "selected" : "";
+          return `<option value="${d.val}" ${sel}>${escapeHtml(en ? d.en : d.tc)}</option>`;
+        }).join("");
 
-          tr.innerHTML = `
-            <td><code>Q${q.id}</code></td>
-            <td>${escapeHtml(en ? q.en : q.tc)}</td>
-            <td><select class="quiz-select" data-qidx="${qIdx}">${optsHtml}</select></td>
-            <td style="text-align: center;" id="q-check-${qIdx}"></td>
-          `;
-          quizSimBody.appendChild(tr);
-        });
-
-        document.querySelectorAll(".quiz-select").forEach((sel) => {
-          sel.addEventListener("change", (e) => {
-            const idx = Number(e.target.dataset.qidx);
-            selectedIdx[idx] = Number(e.target.value);
-            evaluateQuiz();
-          });
-        });
-
-        evaluateQuiz();
-      }
-
-      function evaluateQuiz() {
-        const en = isEnglish();
-        const rawName = simName.value;
-        const rawEmpId = simEmpId.value;
-        const declChecked = simDecl.checked;
-        const satScore = Number(simSat.value);
-        const esgScore = Number(simEsg.value);
-
-        valSat.textContent = `${satScore} / 5`;
-        valEsg.textContent = `${esgScore} / 5`;
-
-        let score = 0;
-        let total = 0;
-        onboardingQuestions.forEach((q, qIdx) => {
-          total += q.points;
-          const isCorrect = selectedIdx[qIdx] === q.answerIdx;
-          if (isCorrect) score += q.points;
-          const checkCell = document.getElementById(`q-check-${qIdx}`);
-          if (checkCell) {
-            checkCell.textContent = isCorrect ? "✅" : "❌";
+        let questionsHtml = "";
+        QUIZ_BANK.forEach((q) => {
+          if (q.type === "single") {
+            const radios = q.options.map((opt) => {
+              const checked = state.answers[q.id] === opt.val ? "checked" : "";
+              return `
+                <label class="opt-label">
+                  <input type="radio" name="${q.id}" value="${opt.val}" ${checked} data-qtype="single" data-qid="${q.id}">
+                  <span>${escapeHtml(en ? opt.en : opt.tc)}</span>
+                </label>`;
+            }).join("");
+            questionsHtml += `
+              <div class="q-block">
+                <div class="q-title">
+                  <span>${escapeHtml(en ? q.en : q.tc)}</span>
+                  <span class="q-tag">${en ? "Single • 1 pt" : "單選 • 1 分"}</span>
+                </div>
+                <div class="radio-list">${radios}</div>
+              </div>`;
+          } else if (q.type === "multiple") {
+            const selectedArr = state.answers[q.id] || [];
+            const checks = q.options.map((opt) => {
+              const checked = selectedArr.includes(opt.val) ? "checked" : "";
+              return `
+                <label class="opt-label">
+                  <input type="checkbox" value="${opt.val}" ${checked} data-qtype="multiple" data-qid="${q.id}">
+                  <span>${escapeHtml(en ? opt.en : opt.tc)}</span>
+                </label>`;
+            }).join("");
+            questionsHtml += `
+              <div class="q-block">
+                <div class="q-title">
+                  <span>${escapeHtml(en ? q.en : q.tc)}</span>
+                  <span class="q-tag">${en ? "Multiple • 5 pts" : "多選 • 5 分"}</span>
+                </div>
+                <div class="multi-grid">${checks}</div>
+              </div>`;
+          } else if (q.type === "group_single") {
+            const subMap = state.answers[q.id] || {};
+            const rows = q.sub_questions.map((sq) => {
+              const opts = q.match_options.map((mo) => {
+                const sel = subMap[sq.sub_id] === mo.val ? "selected" : "";
+                return `<option value="${mo.val}" ${sel}>${escapeHtml(en ? mo.en : mo.tc)}</option>`;
+              }).join("");
+              return `
+                <div class="match-row">
+                  <div class="match-text">${escapeHtml(en ? sq.en : sq.tc)}</div>
+                  <select class="sim-select" data-qtype="group_single" data-qid="${q.id}" data-subid="${sq.sub_id}">${opts}</select>
+                </div>`;
+            }).join("");
+            questionsHtml += `
+              <div class="q-block">
+                <div class="q-title">
+                  <span>${escapeHtml(en ? q.en : q.tc)}</span>
+                  <span class="q-tag">${en ? "Group Match • 5 pts" : "群組配對 • 5 分"}</span>
+                </div>
+                <div>${rows}</div>
+              </div>`;
           }
         });
 
-        const rate = ((score / total) * 100).toFixed(1);
-        const isPass = score >= 15;
-        const missingFields = !rawName.trim() || !rawEmpId.trim();
+        root.innerHTML = `
+          <div class="sim-header-row">
+            <h3>${en ? "📝 Part I: New Employee Onboarding Quiz (20 Points)" : "📝 第一部分：新員工入職培訓測驗（滿分 20 分）"}</h3>
+            <div class="preset-group">
+              <button type="button" class="btn-mini" id="btnPresetPass">${en ? "✅ Fill Pass (20/20)" : "✅ 填入合格示範 (20/20)"}</button>
+              <button type="button" class="btn-mini" id="btnPresetFail">${en ? "⚠️ Fill Fail (10/20)" : "⚠️ 填入不合格示範 (10/20)"}</button>
+            </div>
+          </div>
 
-        document.getElementById("kpiScore").textContent = `${score} / ${total}`;
-        document.getElementById("kpiRate").textContent = `${rate}%`;
+          <details class="expander" style="margin-top:0; margin-bottom:16px;">
+            <summary>${en ? "ℹ️ Personal Information Collection Statement (PICS) & Compliance Notice" : "ℹ️ 個人資料收集聲明 (PICS) 與法規遵循宣告"}</summary>
+            <p style="margin-top:8px; margin-bottom:0; font-size:0.82rem; color:#9ca3af;">
+              ${en
+                ? "1. Purpose: Onboarding assessment, internal audit, and engagement analytics. 2. Protection: Compliant with HK PDPO (Cap. 486) & ISO/IEC 27001 with TLS encryption and zero persistent storage. 3. Access Rights: Contact HR (hr@example.com)."
+                : "1. 收集目的：本系統資料僅供入職培訓考核、內部管理審計及活動偏好分析。2. 資料保護：遵循香港《個人資料（私隱）條例》(Cap. 486) 及 ISO/IEC 27001，採傳輸加密與零持久化運算。3. 查閱權利：請聯絡人力資源組 (hr@example.com)。"}
+            </p>
+          </details>
 
-        const kpiStatus = document.getElementById("kpiStatus");
-        kpiStatus.textContent = isPass
-          ? (en ? "PASS (≥75%)" : "合格 (PASS)")
-          : (en ? "FAIL (<75%)" : "不合格 (FAIL)");
-        kpiStatus.className = `kpi-value ${isPass ? "pass-text" : "fail-text"}`;
+          <div class="sim-grid-3">
+            <div class="sim-field">
+              <label for="inpName">${en ? "Name * (Test Sanitization e.g. / * ?)" : "姓名 *（可測試輸入消毒，如 / * ?）"}</label>
+              <input class="sim-input" type="text" id="inpName" value="${escapeHtml(state.basic.name)}" maxlength="40" placeholder="${en ? "Enter employee name" : "請輸入姓名"}">
+            </div>
+            <div class="sim-field">
+              <label for="inpEmpId">${en ? "Employee ID *" : "職員編號 *"}</label>
+              <input class="sim-input" type="text" id="inpEmpId" value="${escapeHtml(state.basic.emp_id)}" maxlength="20" placeholder="EMP-2026-0188">
+            </div>
+            <div class="sim-field">
+              <label for="inpDept">${en ? "Department *" : "組別 *"}</label>
+              <select class="sim-select" id="inpDept">${deptOptionsHtml}</select>
+            </div>
+          </div>
 
-        simBanner.style.display = "block";
-        if (missingFields || !declChecked) {
-          simBanner.className = "status-banner warn";
-          simBanner.textContent = en
-            ? "🔒 Validation Gate Active: Please complete Employee Name, Employee ID, and check the PICS Integrity Declaration to unlock PDF synthesis & TLS SMTP dispatch."
-            : "🔒 提交門閘攔截：請完整填寫員工姓名、職員編號並勾選「個人確認及 PICS 私隱聲明」，方可解鎖 PDF 合成與一鍵加密寄送功能。";
-        } else if (isPass) {
-          simBanner.className = "status-banner pass";
-          simBanner.textContent = en
-            ? `✅ Onboarding Assessment Passed (${score}/${total}, ${rate}%): Flow1 ready for TLS SMTP dispatch to hr@example.com; Flow2 will close the induction checklist in IMS archive.`
-            : `✅ 通過入職培訓考核（${score}/${total}，${rate}%）：Flow1 已就緒透過 TLS SMTP 加密直寄至 hr@example.com，Flow2 將自動歸檔並結案入職合規清單。`;
-        } else {
-          simBanner.className = "status-banner fail";
-          simBanner.textContent = en
-            ? `⚠️ Below 75% Pass Threshold (${score}/${total}, ${rate}%): PDF record still dispatches for audit traceability, and Flow2 automatically flags HR to schedule mandatory retraining within 7 working days.`
-            : `⚠️ 未達 15 分（75%）合格標準（${score}/${total}，${rate}%）：系統仍保留完整稽核紀錄，Flow2 將自動標記並通知 HR 於 7 個工作天內安排複習及補考。`;
+          ${questionsHtml}
+
+          <div class="decl-box">
+            <label class="decl-label">
+              <input type="checkbox" id="inpDecl" ${state.basic.declaration ? "checked" : ""}>
+              <span>${en ? "I confirm the above information is accurate, completed independently, and accept the PICS privacy notice. *" : "本人確認上述資料正確，由本人獨立完成測驗，並同意上述《個人資料收集聲明》。 *"}</span>
+            </label>
+          </div>
+
+          ${state.errorMsg ? `<div class="alert-box alert-warn" style="margin-top:14px;">⚠️ ${escapeHtml(state.errorMsg)}</div>` : ""}
+
+          <div class="action-bar">
+            <span style="font-size:0.82rem; color:#9ca3af;">${en ? "Passing threshold: ≥ 15 / 20 (75%)" : "合格標準：15 / 20 分（75%）或以上"}</span>
+            <button type="button" class="btn-primary" id="btnSubmitStep1">${en ? "Submit Quiz & View Score ➔" : "提交測驗並檢視得分 ➔"}</button>
+          </div>
+        `;
+
+        document.getElementById("inpName").addEventListener("input", (e) => { state.basic.name = e.target.value; });
+        document.getElementById("inpEmpId").addEventListener("input", (e) => { state.basic.emp_id = e.target.value; });
+        document.getElementById("inpDept").addEventListener("change", (e) => { state.basic.dept = e.target.value; });
+        document.getElementById("inpDecl").addEventListener("change", (e) => { state.basic.declaration = e.target.checked; });
+
+        root.querySelectorAll('[data-qtype="single"]').forEach((el) => {
+          el.addEventListener("change", (e) => {
+            state.answers[e.target.dataset.qid] = e.target.value;
+          });
+        });
+
+        root.querySelectorAll('[data-qtype="multiple"]').forEach((el) => {
+          el.addEventListener("change", (e) => {
+            const qid = e.target.dataset.qid;
+            const val = e.target.value;
+            const arr = new Set(state.answers[qid] || []);
+            if (e.target.checked) arr.add(val);
+            else arr.delete(val);
+            state.answers[qid] = Array.from(arr);
+          });
+        });
+
+        root.querySelectorAll('[data-qtype="group_single"]').forEach((el) => {
+          el.addEventListener("change", (e) => {
+            const qid = e.target.dataset.qid;
+            const subid = e.target.dataset.subid;
+            state.answers[qid][subid] = e.target.value;
+          });
+        });
+
+        document.getElementById("btnPresetPass").addEventListener("click", () => {
+          state.basic.name = en ? "Chan Tai Man" : "陳大文";
+          state.basic.emp_id = "EMP-2026-0188";
+          state.basic.dept = "hr";
+          state.basic.declaration = true;
+          state.answers = {
+            q1: "a", q2: "b", q3: "b", q4: "a", q5: "c",
+            q6: ["m1", "m2", "m3", "m4", "m5"],
+            q7: ["e1", "e2", "e3", "e4", "e5"],
+            q8: { g1: "hr", g2: "sed", g3: "acct", g4: "audit", g5: "admin" }
+          };
+          state.errorMsg = "";
+          render();
+        });
+
+        document.getElementById("btnPresetFail").addEventListener("click", () => {
+          state.basic.name = en ? "Lee Siu Ming" : "李小明";
+          state.basic.emp_id = "EMP-2026-0299";
+          state.basic.dept = "site";
+          state.basic.declaration = true;
+          state.answers = {
+            q1: "a", q2: "a", q3: "b", q4: "b", q5: "c", // 3 pts
+            q6: ["m1", "m2", "m3"], // 3 pts
+            q7: ["e1", "e2"], // 2 pts
+            q8: { g1: "hr", g2: "sed", g3: "admin", g4: "hr", g5: "acct" } // 2 pts -> Total 10/20 (50%)
+          };
+          state.errorMsg = "";
+          render();
+        });
+
+        document.getElementById("btnSubmitStep1").addEventListener("click", () => {
+          if (!state.basic.name.trim() || !state.basic.emp_id.trim() || !state.basic.dept) {
+            state.errorMsg = en
+              ? "Please fill in Name, Employee ID, and select a Department!"
+              : "請先完整填寫姓名、職員編號並選擇組別！";
+            render();
+            return;
+          }
+          if (!state.basic.declaration) {
+            state.errorMsg = en
+              ? "Please check the personal declaration & PICS consent box before submitting!"
+              : "請先勾選個人確認及私隱聲明方可提交！";
+            render();
+            return;
+          }
+          state.errorMsg = "";
+          state.quizResult = calculateScore();
+          state.submitTime = getHKTTimestamp();
+          state.step = 2;
+          render();
+          document.getElementById("simulatorSection").scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      }
+
+      function renderStep2() {
+        const en = isEn();
+        const r = state.quizResult;
+        const b = state.basic;
+        const s = state.survey;
+
+        const sportsChips = SPORTS_OPTS.map((opt) => {
+          const checked = s.s2_q2.includes(opt.val) ? "checked" : "";
+          return `
+            <label class="chip-label">
+              <input type="checkbox" value="${opt.val}" ${checked} data-chip="s2_q2">
+              <span>${escapeHtml(en ? opt.en : opt.tc)}</span>
+            </label>`;
+        }).join("");
+
+        const volChips = VOL_OPTS.map((opt) => {
+          const checked = s.s2_q4.includes(opt.val) ? "checked" : "";
+          return `
+            <label class="chip-label">
+              <input type="checkbox" value="${opt.val}" ${checked} data-chip="s2_q4">
+              <span>${escapeHtml(en ? opt.en : opt.tc)}</span>
+            </label>`;
+        }).join("");
+
+        root.innerHTML = `
+          <div class="sim-header-row">
+            <h3>${en ? "📊 Part II: Quiz Result & Employee Feedback Survey" : "📊 第二部分：測驗得分結果與問卷調查"}</h3>
+          </div>
+
+          <div class="alert-box alert-info">
+            👤 ${en ? "Employee" : "員工"}：${escapeHtml(cleanText(b.name))} (${escapeHtml(cleanText(b.emp_id))}) | ${en ? "Department" : "組別"}：${escapeHtml(getDeptLabel(b.dept))}
+          </div>
+
+          <div class="alert-box ${r.is_pass ? "alert-pass" : "alert-fail"}">
+            🎯 ${en ? "Quiz Score" : "測驗得分"}：${r.score} / ${r.total}（${en ? "Pass Rate" : "合格率"}：${r.pass_rate.toFixed(1)}%）—
+            ${r.is_pass
+              ? (en ? "🎉 Congratulations! You passed the onboarding assessment." : "🎉 恭喜通過入職培訓考核！")
+              : (en ? "⚠️ Below the 15/20 (75%) pass threshold. Flow2 will flag HR for retraining." : "⚠️ 未達 15 分 (75%) 合格標準，提交後 Flow2 將自動標記補考跟進。")}
+          </div>
+
+          <p style="font-size:0.86rem; color:#9ca3af; margin-bottom:10px;">
+            ${en ? "Please complete the following engagement survey to generate the controlled PDF and dispatch results (1 = Strongly Disagree, 5 = Strongly Agree):" : "請繼續完成以下意見調查，完成後即可生成受控 PDF 及發送結果（1 分 = 非常不同意，5 分 = 非常同意）："}
+          </p>
+
+          <div class="q-section-title">${en ? "Section I. Training Evaluation" : "一、基本培訓評估問題"}</div>
+          <div class="slider-grid">
+            <div class="slider-card">
+              <div class="slider-head"><span>${en ? "1. Overall Training Satisfaction *" : "1. 培訓整體滿意度 *"}</span><span class="slider-val" id="v_s1_q1">${s.s1_q1} / 5</span></div>
+              <input type="range" min="1" max="5" step="1" value="${s.s1_q1}" data-slider="s1_q1">
+            </div>
+            <div class="slider-card">
+              <div class="slider-head"><span>${en ? "2. Content Met Expectations *" : "2. 培訓內容符合期望 *"}</span><span class="slider-val" id="v_s1_q2">${s.s1_q2} / 5</span></div>
+              <input type="range" min="1" max="5" step="1" value="${s.s1_q2}" data-slider="s1_q2">
+            </div>
+            <div class="slider-card">
+              <div class="slider-head"><span>${en ? "3. Trainer Performance *" : "3. 培訓師表現 *"}</span><span class="slider-val" id="v_s1_q3">${s.s1_q3} / 5</span></div>
+              <input type="range" min="1" max="5" step="1" value="${s.s1_q3}" data-slider="s1_q3">
+            </div>
+          </div>
+          <div class="sim-field" style="margin-bottom:14px;">
+            <label>${en ? "4. What content should be improved or added?" : "4. 有哪些內容您認為需要改進或增補？"}</label>
+            <textarea class="sim-textarea" data-text="s1_q4" placeholder="${en ? "Optional suggestions..." : "選填建議..."}">${escapeHtml(s.s1_q4)}</textarea>
+          </div>
+
+          <div class="q-section-title">${en ? "Section II. Personal Interests & Corporate Activities" : "二、個人興趣及公司活動"}</div>
+          <div class="slider-grid">
+            <div class="slider-card">
+              <div class="slider-head"><span>${en ? "1. Interest in Sports Activities *" : "1. 參加運動活動興趣 *"}</span><span class="slider-val" id="v_s2_q1">${s.s2_q1} / 5</span></div>
+              <input type="range" min="1" max="5" step="1" value="${s.s2_q1}" data-slider="s2_q1">
+            </div>
+            <div class="slider-card">
+              <div class="slider-head"><span>${en ? "3. Volunteering Willingness *" : "3. 參加義工活動意願 *"}</span><span class="slider-val" id="v_s2_q3">${s.s2_q3} / 5</span></div>
+              <input type="range" min="1" max="5" step="1" value="${s.s2_q3}" data-slider="s2_q3">
+            </div>
+            <div class="slider-card">
+              <div class="slider-head"><span>${en ? "5. Co-organizing Events Interest *" : "5. 協助籌辦活動興趣 *"}</span><span class="slider-val" id="v_s2_q5">${s.s2_q5} / 5</span></div>
+              <input type="range" min="1" max="5" step="1" value="${s.s2_q5}" data-slider="s2_q5">
+            </div>
+          </div>
+
+          <div class="sim-field" style="margin-bottom:10px;">
+            <label>${en ? "2. Sports Preferences (Multi-select)" : "2. 您有哪些運動愛好？（多選）"}</label>
+            <div class="chip-wrap">${sportsChips}</div>
+            <input class="sim-input" type="text" data-text="s2_q2_other" value="${escapeHtml(s.s2_q2_other)}" placeholder="${en ? "Other sports (optional)" : "運動愛好（其他說明，選填）"}">
+          </div>
+
+          <div class="sim-field" style="margin-bottom:10px;">
+            <label>${en ? "4. Preferred Community / ESG Causes (Multi-select)" : "4. 您希望參加的公益活動有什麼？（多選）"}</label>
+            <div class="chip-wrap">${volChips}</div>
+            <input class="sim-input" type="text" data-text="s2_q4_other" value="${escapeHtml(s.s2_q4_other)}" placeholder="${en ? "Other causes (optional)" : "公益活動（其他說明，選填）"}">
+          </div>
+
+          <div class="sim-grid-3" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+            <div class="sim-field">
+              <label>${en ? "6. Views on Work-Life Balance" : "6. 您對於工作與生活平衡的看法是什麼？"}</label>
+              <textarea class="sim-textarea" data-text="s2_q6">${escapeHtml(s.s2_q6)}</textarea>
+            </div>
+            <div class="sim-field">
+              <label>${en ? "7. Suggestions for Future Corporate Events" : "7. 您對於未來公司活動有什麼建議？"}</label>
+              <textarea class="sim-textarea" data-text="s2_q7">${escapeHtml(s.s2_q7)}</textarea>
+            </div>
+          </div>
+
+          <div class="q-section-title">${en ? "Section III. Open-Ended Questions" : "三、開放式問題"}</div>
+          <div class="sim-grid-3" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+            <div class="sim-field">
+              <label>${en ? "1. Views on Company Culture" : "1. 您對於公司文化的看法是什麼？"}</label>
+              <textarea class="sim-textarea" data-text="s3_q1">${escapeHtml(s.s3_q1)}</textarea>
+            </div>
+            <div class="sim-field">
+              <label>${en ? "2. Company Strengths & Improvement Areas" : "2. 您認為公司有哪些優勢，哪些方面需要改進？"}</label>
+              <textarea class="sim-textarea" data-text="s3_q2">${escapeHtml(s.s3_q2)}</textarea>
+            </div>
+            <div class="sim-field">
+              <label>${en ? "3. Additional Support or Resources Desired" : "3. 您希望在公司能夠獲得哪些額外的支持或資源？"}</label>
+              <textarea class="sim-textarea" data-text="s3_q3">${escapeHtml(s.s3_q3)}</textarea>
+            </div>
+            <div class="sim-field">
+              <label>${en ? "4. Suggestions for Future Development" : "4. 您對於公司未來的發展方向有什麼建議？"}</label>
+              <textarea class="sim-textarea" data-text="s3_q4">${escapeHtml(s.s3_q4)}</textarea>
+            </div>
+          </div>
+          <div class="sim-field" style="margin-top:10px;">
+            <label>${en ? "5. Other Suggestions or Comments" : "5. 其他建議或意見？"}</label>
+            <textarea class="sim-textarea" data-text="s3_q5">${escapeHtml(s.s3_q5)}</textarea>
+          </div>
+
+          <div class="action-bar">
+            <button type="button" class="btn-secondary" id="btnBackStep1">${en ? "⬅ Back to Part I" : "⬅ 返回修改測驗"}</button>
+            <button type="button" class="btn-primary" id="btnSubmitStep2">${en ? "Complete Survey & Proceed to Dispatch ➔" : "完成問卷並進入送出頁面 ➔"}</button>
+          </div>
+        `;
+
+        root.querySelectorAll("[data-slider]").forEach((el) => {
+          el.addEventListener("input", (e) => {
+            const key = e.target.dataset.slider;
+            state.survey[key] = Number(e.target.value);
+            const label = document.getElementById(`v_${key}`);
+            if (label) label.textContent = `${state.survey[key]} / 5`;
+          });
+        });
+
+        root.querySelectorAll("[data-chip]").forEach((el) => {
+          el.addEventListener("change", (e) => {
+            const key = e.target.dataset.chip;
+            const set = new Set(state.survey[key]);
+            if (e.target.checked) set.add(e.target.value);
+            else set.delete(e.target.value);
+            state.survey[key] = Array.from(set);
+          });
+        });
+
+        root.querySelectorAll("[data-text]").forEach((el) => {
+          el.addEventListener("input", (e) => {
+            state.survey[e.target.dataset.text] = e.target.value;
+          });
+        });
+
+        document.getElementById("btnBackStep1").addEventListener("click", () => {
+          state.step = 1;
+          render();
+          document.getElementById("simulatorSection").scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+
+        document.getElementById("btnSubmitStep2").addEventListener("click", () => {
+          state.step = 3;
+          state.emailSent = false;
+          state.dispatchLog = "";
+          render();
+          document.getElementById("simulatorSection").scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      }
+
+      function renderStep3() {
+        const en = isEn();
+        const r = state.quizResult;
+        const b = state.basic;
+        const s = state.survey;
+        const safeFile = sanitizeFilename(b.name);
+        const pdfFilename = en ? `Onboarding_Record_${safeFile}.pdf` : `入職培訓紀錄_${safeFile}.pdf`;
+        const txtFilename = en ? `Onboarding_Record_${safeFile}.txt` : `入職培訓紀錄_${safeFile}.txt`;
+        const statusStr = r.is_pass ? (en ? "PASS" : "合格 (PASS)") : (en ? "FAIL" : "不合格 (FAIL)");
+        const sportsStr = mapChipLabels(s.s2_q2, SPORTS_OPTS, s.s2_q2_other);
+        const volStr = mapChipLabels(s.s2_q4, VOL_OPTS, s.s2_q4_other);
+
+        const waMsg = en
+          ? `Dear HR,\nThis is ${cleanText(b.name)} (${cleanText(b.emp_id)}) from ${getDeptLabel(b.dept)}. I have completed the onboarding assessment & survey (Score: ${r.score}/${r.total}, ${statusStr}).`
+          : `Dear HR,\n我是 ${getDeptLabel(b.dept)} 的 ${cleanText(b.name)} (${cleanText(b.emp_id)})。我已完成新員工入職培訓問卷考核（得分：${r.score}/${r.total}，${statusStr}）。`;
+        const waUrl = `https://wa.me/85200000000?text=${encodeURIComponent(waMsg)}`;
+        const txtDataUri = `data:text/plain;charset=utf-8,${encodeURIComponent(buildPlainTextReport())}`;
+
+        const flow2Verdict = r.is_pass
+          ? (en ? "Flow2: Archived to /HR_IMS_Records/ & Onboarding Checklist Marked Completed." : "Flow2：已自動歸檔至 /HR_IMS_Records/ 受控人事庫，並標記入職合規結案。")
+          : (en ? "Flow2: Archived for audit & flagged HR to schedule mandatory retraining within 7 working days." : "Flow2：已保留完整稽核紀錄，並自動觸發 7 個工作天內補考跟進任務予 HR。");
+
+        root.innerHTML = `
+          <div class="sim-header-row">
+            <h3>${en ? "🎉 Part III: Assessment & Survey Completed!" : "🎉 第三部分：考核與問卷完成！"}</h3>
+            <span class="role-badge">${en ? "Score" : "成績摘要"}：${r.score} / ${r.total}（${statusStr}）</span>
+          </div>
+
+          <div class="q-section-title" style="margin-top:0;">${en ? "📤 Step 1: One-Click Encrypted Dispatch to HR" : "📤 第一步：一鍵提交報告至 HR"}</div>
+          ${!state.emailSent
+            ? `<button type="button" class="btn-primary full" id="btnSendEmail">${en ? "🚀 Click to Auto-Dispatch Report to HR Email (Attaches Controlled PDF)" : "🚀 點此一鍵自動送出報告至 HR 電郵 (自動附加受控 PDF 報告)"}</button>`
+            : `<div class="alert-box alert-pass">✅ ${en ? "Dispatched! Controlled report delivered via TLS SMTP (Port 587) to hr@example.com — Duplicate send locked." : "報告已成功寄送至 HR 電郵 (hr@example.com)！系統已鎖定防重複提交，並釋放暫存記憶體。"}</div>
+               <div class="alert-box ${r.is_pass ? "alert-info" : "alert-warn"}">${escapeHtml(flow2Verdict)}</div>`}
+
+          <div class="q-section-title">${en ? "📄 Live Controlled PDF Report Preview (generate_pdf Output)" : "📄 受控 PDF 報告即時預覽（對應 generate_pdf 輸出結構）"}</div>
+          <div class="pdf-preview">
+            <div class="pdf-top-right">
+              Enterprise Demo Framework - IMS Controlled Record<br>
+              Doc ID: DEMO-HR-REC-2026-V1 | Confidential
+            </div>
+            <div class="pdf-doc-title">${en ? "New Employee Onboarding Assessment & Survey Report" : "新員工入職培訓考核及問卷報告"}</div>
+            <div>${en ? "Name" : "姓名"}：${escapeHtml(cleanText(b.name))}</div>
+            <div>${en ? "Employee ID" : "職員編號"}：${escapeHtml(cleanText(b.emp_id))}</div>
+            <div>${en ? "Department" : "組別"}：${escapeHtml(getDeptLabel(b.dept))}</div>
+            <div>${en ? "Assessment Time" : "考核時間"}：${escapeHtml(state.submitTime)} (HKT)</div>
+            <div>${en ? "Quiz Score" : "測驗得分"}：${r.score} / ${r.total} (${r.pass_rate.toFixed(1)}%) - ${statusStr}</div>
+
+            <div class="pdf-sec-head">${en ? "I. Training Evaluation" : "一、基本培訓評估問題"}</div>
+            <div>1. ${en ? "Overall Satisfaction" : "培訓整體滿意度"}：${s.s1_q1} / 5 | 2. ${en ? "Met Expectations" : "符合期望"}：${s.s1_q2} / 5 | 3. ${en ? "Trainer" : "培訓師表現"}：${s.s1_q3} / 5</div>
+            <div>4. ${en ? "Improvements / Additions" : "需要改進或增補內容"}：${escapeHtml(cleanText(s.s1_q4))}</div>
+
+            <div class="pdf-sec-head">${en ? "II. Personal Interests & Corporate Activities" : "二、個人興趣及公司活動"}</div>
+            <div>1. ${en ? "Sports Interest" : "運動興趣"}：${s.s2_q1} / 5 | 2. ${en ? "Sports" : "運動愛好"}：${escapeHtml(sportsStr)}</div>
+            <div>3. ${en ? "Volunteering" : "義工意願"}：${s.s2_q3} / 5 | 4. ${en ? "Causes" : "公益興趣"}：${escapeHtml(volStr)} | 5. ${en ? "Organizing" : "籌辦興趣"}：${s.s2_q5} / 5</div>
+            <div>6. ${en ? "Work-Life Balance" : "工作與生活平衡看法"}：${escapeHtml(cleanText(s.s2_q6))}</div>
+            <div>7. ${en ? "Future Events" : "未來公司活動建議"}：${escapeHtml(cleanText(s.s2_q7))}</div>
+
+            <div class="pdf-sec-head">${en ? "III. Open-Ended Questions" : "三、開放式問題"}</div>
+            <div>1. ${en ? "Company Culture" : "對公司文化的看法"}：${escapeHtml(cleanText(s.s3_q1))}</div>
+            <div>2. ${en ? "Strengths & Improvements" : "公司優勢與改進建議"}：${escapeHtml(cleanText(s.s3_q2))}</div>
+            <div>3. ${en ? "Extra Support / Resources" : "希望獲得的額外支持/資源"}：${escapeHtml(cleanText(s.s3_q3))}</div>
+            <div>4. ${en ? "Future Direction" : "對公司未來發展方向的建議"}：${escapeHtml(cleanText(s.s3_q4))}</div>
+            <div>5. ${en ? "Other Comments" : "其他建議或意見"}：${escapeHtml(cleanText(s.s3_q5))}</div>
+
+            <div class="pdf-foot">
+              ${en
+                ? `Sanitized Attachment Filename: ${escapeHtml(pdfFilename)} | Declaration: Internal HR training record protected under HK PDPO (Cap. 486) & ISO/IEC 27001. RAM-Only (Zero-Data-Retention).`
+                : `消毒後附件檔名：${escapeHtml(pdfFilename)} ｜ 聲明：本文件為內部培訓紀錄，由員工本人確認填答。個人資料僅供內部人力資源管理用途（純記憶體渲染・零資料留存）。`}
+            </div>
+          </div>
+
+          <div class="q-section-title">${en ? "📥 Backup & Manual Download (Optional)" : "📥 備份與手動下載 (選填)"}</div>
+          <a class="btn-secondary full" href="${txtDataUri}" download="${escapeHtml(txtFilename)}">
+            💾 ${en ? `Download Controlled Record Backup (${escapeHtml(txtFilename)})` : `下載「${escapeHtml(txtFilename)}」受控紀錄純文字副本（示範版）`}
+          </a>
+
+          <details class="expander">
+            <summary>${en ? "💬 Alternative Submission (WhatsApp Notification Template - Demo)" : "💬 備用提交方式（WhatsApp 通知範本預覽 - 示範號碼）"}</summary>
+            <div class="wa-preview-box">${escapeHtml(waMsg)}</div>
+            <a class="btn-wa" href="${waUrl}" target="_blank" rel="noopener">
+              💬 ${en ? "Preview WhatsApp Dispatch to HR (Demo: +852 0000 0000)" : "透過 WhatsApp 通知 HR（示範號碼：85200000000）"}
+            </a>
+          </details>
+
+          <div class="action-bar">
+            <button type="button" class="btn-secondary" id="btnBackStep2">${en ? "⬅ Back to Survey" : "⬅ 返回修改問卷"}</button>
+            <button type="button" class="btn-secondary" id="btnResetAll">${en ? "🔄 Restart Quiz & Purge Session Memory" : "🔄 重新填寫問卷（清空暫存狀態）"}</button>
+          </div>
+        `;
+
+        const sendBtn = document.getElementById("btnSendEmail");
+        if (sendBtn) {
+          sendBtn.addEventListener("click", () => {
+            state.emailSent = true;
+            render();
+          });
         }
 
-        const safeName = sanitizeInput(rawName);
-        const safeId = sanitizeInput(rawEmpId);
-        const safeFile = sanitizeFilename(rawName);
-        const deptObj = departments.find((d) => d.val === simDept.value) || departments[0];
-        const deptLabel = en ? deptObj.en : deptObj.tc;
-        const hktNow = getHKTTimestamp();
-        const filePrefix = en ? "Onboarding_Training_Record_" : "入職培訓紀錄_";
+        document.getElementById("btnBackStep2").addEventListener("click", () => {
+          state.step = 2;
+          render();
+        });
 
-        const flow1State = (missingFields || !declChecked)
-          ? (en ? "BLOCKED (Schema / Consent Gate)" : "已攔截（未滿足必填／聲明門閘）")
-          : (en ? "READY -> TLS SMTP (Port 587) -> hr@example.com" : "就緒 ➔ Python SMTP STARTTLS (Port 587) ➔ hr@example.com");
+        document.getElementById("btnResetAll").addEventListener("click", () => {
+          state = createInitialState();
+          if (isEn()) state.basic.name = "Chan Tai Man";
+          render();
+          document.getElementById("simulatorSection").scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      }
 
-        const flow2State = (missingFields || !declChecked)
-          ? (en ? "WAITING" : "待命中")
-          : isPass
-            ? (en ? "Archive to /HR_IMS_Records/ & Close Checklist" : "歸檔至 /HR_IMS_Records/ 並標記入職合規結案")
-            : (en ? "Archive & Flag Mandatory Retraining (7 Working Days)" : "歸檔紀錄並觸發 7 個工作天補考追蹤任務");
-
-        recordPreview.innerHTML = `
-          <div class="rec-head">
-            <span>Enterprise Demo Framework — IMS Controlled Record Preview</span>
-            <span>Doc ID: DEMO-HR-REC-2026-V1 | Confidential</span>
-          </div>
-          <div><strong>${en ? "Employee / Staff ID" : "員工姓名 / 職員編號"}:</strong> ${escapeHtml(safeName)} (${escapeHtml(safeId)}) | <strong>${en ? "Department" : "組別"}:</strong> ${escapeHtml(deptLabel)}</div>
-          <div><strong>${en ? "Timestamp" : "考核時間戳"}:</strong> ${escapeHtml(hktNow)}</div>
-          <div><strong>${en ? "Part I Assessment" : "第一部分考核結果"}:</strong> ${score} / ${total} (${rate}%) — ${isPass ? "PASS" : "FAIL"}</div>
-          <div><strong>${en ? "Part II Survey Sample" : "第二部分問卷採樣"}:</strong> ${en ? "Satisfaction" : "培訓滿意度"} ${satScore}/5 | ${en ? "ESG & Wellness Interest" : "義工及康體意願"} ${esgScore}/5</div>
-          <div><strong>${en ? "Sanitized PDF Filename" : "消毒後 PDF 檔名"}:</strong> ${escapeHtml(filePrefix + safeFile + ".pdf")}</div>
-          <div><strong>${en ? "Flow1 Dispatch" : "Flow1 傳輸狀態"}:</strong> ${escapeHtml(flow1State)}</div>
-          <div><strong>${en ? "Flow2 Governance" : "Flow2 歸檔分流"}:</strong> ${escapeHtml(flow2State)} | ${en ? "RAM-Only (Zero-Data-Retention)" : "純記憶體渲染（零資料留存）"}</div>
-        `;
+      function render() {
+        updateStepper();
+        if (state.step === 1) renderStep1();
+        else if (state.step === 2) renderStep2();
+        else renderStep3();
       }
 
       document.getElementById("langBtn").addEventListener("click", () => {
         document.body.classList.toggle("lang-en");
-        syncLanguageControls();
-        buildQuizTable();
+        const en = isEn();
+        document.documentElement.lang = en ? "en" : "zh-HK";
+        if (en && state.basic.name === "陳大文") state.basic.name = "Chan Tai Man";
+        else if (!en && state.basic.name === "Chan Tai Man") state.basic.name = "陳大文";
+        else if (en && state.basic.name === "李小明") state.basic.name = "Lee Siu Ming";
+        else if (!en && state.basic.name === "Lee Siu Ming") state.basic.name = "李小明";
+        render();
       });
 
-      document.getElementById("btnAllPass").addEventListener("click", () => {
-        onboardingQuestions.forEach((q, idx) => { selectedIdx[idx] = q.answerIdx; });
-        simSat.value = "5";
-        simEsg.value = "4";
-        simDecl.checked = true;
-        buildQuizTable();
-      });
-
-      document.getElementById("btnTestFail").addEventListener("click", () => {
-        selectedIdx[0] = 0; // correct (5)
-        selectedIdx[1] = 1; // correct (5)
-        selectedIdx[2] = 0; // wrong (0)
-        selectedIdx[3] = 2; // wrong (0) -> 10/20 (50%) FAIL
-        simSat.value = "3";
-        simEsg.value = "3";
-        simDecl.checked = true;
-        buildQuizTable();
-      });
-
-      simName.addEventListener("input", evaluateQuiz);
-      simEmpId.addEventListener("input", evaluateQuiz);
-      simDept.addEventListener("change", evaluateQuiz);
-      simSat.addEventListener("input", evaluateQuiz);
-      simEsg.addEventListener("input", evaluateQuiz);
-      simDecl.addEventListener("change", evaluateQuiz);
-
-      syncLanguageControls();
-      buildQuizTable();
+      render();
     })();
   </script>
 </body>
