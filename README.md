@@ -1,117 +1,146 @@
-# 📝 企業級新員工入職培訓考核及問卷系統 (Enterprise Demo)
-# Enterprise Onboarding Assessment & Feedback System (Demo)
+# 📝 企業級新員工入職培訓考核及問卷系統
+### Enterprise Onboarding Assessment & Feedback System (`EnterpriseDemo-OnboardingQuiz`)
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](#)
+[![Interactive Demo](https://img.shields.io/badge/Interactive%20Demo-GitHub%20Pages-0078D4?logo=github)](https://jackylawck.github.io/EnterpriseDemo-OnboardingQuiz/)
+[![Streamlit](https://img.shields.io/badge/Built%20with-Streamlit-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Compliance: ISO 27001](https://img.shields.io/badge/Compliance-ISO%2027001-green.svg)](SECURITY_COMPLIANCE.md)
-[![Privacy: Privacy-by-Design](https://img.shields.io/badge/Privacy-Privacy--by--Design-brightgreen.svg)](PRIVACY_POLICY.md)
+[![Compliance: ISO 27001 | 9001 | 45001](https://img.shields.io/badge/Compliance-ISO%2027001%20%7C%209001%20%7C%2045001-107c41.svg)](SECURITY_COMPLIANCE.md)
+[![Privacy: Zero-Data-Retention](https://img.shields.io/badge/Privacy-Zero--Data--Retention-orange.svg)](PRIVACY_POLICY.md)
+[![AI Governance: Non-AI Deterministic](https://img.shields.io/badge/AI%20Governance-Non--AI%20Deterministic-teal.svg)](SECURITY_COMPLIANCE.md)
+
+> **線上互動模擬器 / Live Interactive Simulator**：無需配置郵件伺服器，直接透過 [GitHub Pages 互動展示頁](https://jackylawck.github.io/EnterpriseDemo-OnboardingQuiz/) 體驗完整三階段考核、問卷與受控 PDF 生成閉環。
 
 ---
 
 ## 🌐 項目簡介 / System Overview
 
-**(中文)**  
-**EnterpriseDemo-OnboardingQuiz** 是一個基於 Streamlit 開發的獨立企業級 Web 系統示範 (Demo)。本系統為企業展示如何整合「入職培訓考核測驗」、「培訓滿意度評估」及「員工興趣調查」，並能即時動態繪製受控繁體中文 PDF 報告 (`DEMO-HR-REC-2026-V1`)。員工完成後只需一鍵點擊，後端即透過 Python SMTP 自動將報告及 PDF 附件直接加密寄送至 HR 部門，實現完全無紙化與零資料滯留的自動化管治。
+**EnterpriseDemo-OnboardingQuiz** 是一套專為現代企業設計的無紙化入職培訓考核與員工意見調查參考架構（Governance-as-Code Demo）。系統基於 Python 與 Streamlit 構建，在**不架設外置資料庫、零個人資料持久化（Zero-Data-Retention）**的前提下，將「規章知識考核」、「培訓滿意度與 ESG 活動調研」及「受控 PDF 報告自動歸檔（`DEMO-HR-REC-2026-V1`）」整合為端對端自動化閉環，兼顧 **ISO/IEC 27001 資訊安全**與**香港《個人資料（私隱）條例》(Cap. 486)** 合規要求。
 
-**(English)**  
-**EnterpriseDemo-OnboardingQuiz** is a standalone, enterprise-grade web application demo built with Streamlit. This system demonstrates how to integrate "Onboarding Knowledge Quizzes," "Training Satisfaction Surveys," and "Employee Engagement Surveys" into a seamless workflow. It dynamically generates an IMS-controlled PDF report (`DEMO-HR-REC-2026-V1`). With a single click, the backend automatically dispatches the report and PDF attachment directly to the HR department via Python SMTP (TLS), achieving a fully paperless and zero-data-retention automated governance process.
+**EnterpriseDemo-OnboardingQuiz** is a reference implementation for paperless enterprise onboarding assessments and employee engagement surveys built with Python and Streamlit. Operating with **zero external databases and strict Zero-Data-Retention**, it unifies policy knowledge testing, training satisfaction & ESG engagement surveys, and in-memory controlled PDF synthesis (`DEMO-HR-REC-2026-V1`) with encrypted TLS SMTP delivery—aligned with **ISO/IEC 27001**, **ISO 9001/45001**, and **Hong Kong PDPO (Cap. 486)**.
 
 ---
 
-## 🛠️ 核心特色 / Key Features
+## 🛠️ 核心特色與合規工程 / Key Features & Governance Controls
 
-- **全自動一鍵後端提交 (One-Click Automated Email Submission via SMTP)**
-  - *中文*：員工完成測驗與問卷後，點擊按鈕即可由後端自動打包 PDF 報告並直接以電郵發送至 HR，無需開啟任何外部郵件軟體。
-  - *English*：Users simply click a button upon completion, and the backend automatically bundles the PDF report and sends it directly to HR via email, without launching any external email clients.
-  
-- **機密題庫後端隔離保護 (Secure Secrets Management)**
-  - *中文*：題目、正確答案及敏感驗證金鑰完全儲存於 Streamlit Secrets 後端，前端不暴露任何題庫代碼與評分邏輯。
-  - *English*：Questions, answer keys, and sensitive access tokens are strictly encapsulated within Streamlit Secrets. The frontend source code exposes no grading logic or internal questionnaires.
-
-- **即時自動評分機制 (Real-time Automated Grading)**
-  - *中文*：支援單選、多選及條款配對題，提交後即時動態計算得分狀態。
-  - *English*：Supports single-choice, multiple-choice, and matching questions with real-time dynamic scoring and pass/fail evaluation upon submission.
-
-- **合規受控 PDF 報告生成 (Compliant IMS Controlled PDF Generation)**
-  - *中文*：整合個人資料、答題成績、滿意度分數及開放式建議，即時繪製成標準向量 PDF 文件，符合 ISO 文件審計要求。
-  - *English*：Integrates personal info, quiz scores, survey results, and open-ended feedback into a standard vector PDF document instantly, fulfilling ISO document auditing requirements.
-
-- **跨平台響應式體驗 (Responsive Mobile & Desktop Friendly)**
-  - *中文*：完美適應電腦寫字樓環境與手機流動端操作，問卷滑塊、多選框與版面自動對齊。
-  - *English*：Optimized for both desktop workstations and mobile touch devices, ensuring a seamless user experience across all form controls and sliders.
+| 核心維度 / Pillar | 繁體中文說明 | English Description |
+| :--- | :--- | :--- |
+| **零資料留存架構**<br>`Privacy-by-Design` | PDF 報告純於伺服器記憶體（RAM）即時繪製並透過 TLS 加密傳輸，關閉分頁即刻釋放，不在雲端留下任何個人識別資訊（PII）。 | Controlled PDFs are synthesized strictly in volatile RAM and dispatched over TLS; zero PII or files are persisted on disk or cloud storage. |
+| **動態 Secrets 隔離**<br>`ISO/IEC 27001` | 通行金鑰、試題題庫、標準答案與 SMTP 憑證全數封裝於後端 `st.secrets`，公開原始碼零硬編碼機密，支援熱更新題庫。 | Access codes, quiz answer keys, and SMTP credentials reside solely in `st.secrets`—zero hardcoded secrets with hot-swappable quiz banks. |
+| **確定性多題型評分**<br>`Non-AI Deterministic` | 支援**單選、多選與群組配對**三種題型（滿分 20 分，≥15 分／75% 合格）。採用純規則精確比對，明確排除於 EU AI Act 監管範圍外。 | Supports **single, multiple, and group-matching** items (20 pts max; ≥15 pts / 75% pass) via deterministic rule matching, scoped out of EU AI Act. |
+| **受控 PDF 存證引擎**<br>`ISO 9001 / 45001` | 自動校準香港標準時間（UTC+8 HKT），嵌入受控編號 `DEMO-HR-REC-2026-V1`、誠信聲明與 PDPO 法定宣告，滿足審計調閱要求。 | Normalizes timestamps to HKT (UTC+8) and embeds controlled ID `DEMO-HR-REC-2026-V1`, integrity consent, and PDPO notices for audit readiness. |
+| **一鍵加密發信與分流**<br>`Automated Closure` | 後端透過 `SMTP + STARTTLS (Port 587)` 直送 HR 信箱並附防重複發送鎖，配套 `Flow1` 與 `Flow2` 自動化歸檔及 7 天補考追蹤藍圖。 | Dispatches reports via `SMTP + STARTTLS (Port 587)` with deduplication locks, paired with `Flow1` & `Flow2` blueprints for archiving and retraining. |
 
 ---
 
-## 🚀 系統流程 / Application Workflow
+## 🚀 系統運作閉環 / Application Workflow
 
 ```text
-[1. 登入 / Login] ➔ [2. 考核測驗 / Quiz] ➔ [3. 滿意度調查 / Survey] ➔ [4. 一鍵發送 / Submit & Download]
-
+[0. Secrets 門禁驗證] ➔ [1. 第一部分：20分制考核] ➔ [2. 第二部分：滿意度與ESG問卷] ➔ [3. 第三部分：受控PDF生成與TLS寄送]
+   Access Gate             Part I: Policy Quiz           Part II: Engagement Survey         Part III: SMTP Dispatch & Backup
 ```
 
-1. **登入驗證 (Access Verification)**
-* 透過 URL Key 或手動輸入員工通行碼進入系統。
-* Authenticate via URL parameters or manual passcode entry.
-
-
-2. **第一部分：入職培訓測驗 (Part I: Onboarding Quiz)**
-* 填寫基本資料，完成規章制度測驗並勾選誠信聲明。
-* Fill in basic details, complete compliance questions, and acknowledge the integrity declaration.
-
-
-3. **第二部分：問卷及興趣調查 (Part II: Feedback & Engagement Survey)**
-* 檢視測驗即時得分，填寫滿意度評估、活動愛好及開放式建議。
-* Review quiz scores instantly, and provide feedback on training satisfaction and corporate engagement.
-
-
-4. **第三部分：一鍵提交與備份 (Part III: Submit & Archiving)**
-* 點擊 **「🚀 一鍵自動送出報告」**，後端即時打包 PDF 報告並寄送給 HR。
-* 提供 **「💾 下載 PDF 報告」** 供員工自行備份。
-* Click the submit button to dispatch the PDF via the backend, and optionally download a local backup.
-
-
+1. **門禁核對 (Access Verification)**  
+   透過專屬 URL 參數（`?key=...`）或手動輸入通行碼，與後端 `ACCESS_CODE` 比對放行。  
+   *Authenticate via URL parameter (`?key=...`) or manual passcode verified against backend `ACCESS_CODE`.*
+2. **第一部分：入職培訓測驗 (Part I: Onboarding Quiz)**  
+   填寫姓名、職員編號及所屬組別，完成單選、多選及配對測驗並勾選誠信與 PICS 私隱聲明。  
+   *Enter staff details, complete single/multiple/group-matching questions, and check the integrity & PICS declaration.*
+3. **第二部分：問卷及興趣調查 (Part II: Feedback & Engagement Survey)**  
+   即時檢視考核得分（達 15/20 分即 75% 為合格），填寫 1–5 分培訓評估、康體／義工活動意願及開放式建議。  
+   *Review instant quiz results (≥15/20 or 75% to pass) and submit 1–5 training ratings, wellness/volunteering preferences, and culture feedback.*
+4. **第三部分：一鍵加密送出與備份 (Part III: Dispatch & Archiving)**  
+   點擊 **「🚀 一鍵自動送出報告至 HR 電郵」** 經 TLS 寄送受控 PDF，並可下載個人副本或使用備用通知通道。  
+   *Trigger one-click TLS SMTP delivery with the attached controlled PDF, download a local backup, or use the alternative notification option.*
 
 ---
 
-## ⚙️ 環境變數設定 / Secrets Configuration (`.streamlit/secrets.toml`)
+## 📂 專案結構與合規文件 / Repository Structure & Artifacts
 
-**(中文)** 請在本地端 `.streamlit` 資料夾下或雲端部署平台 (如 Streamlit Community Cloud) 設定以下 Secrets。**切勿將此檔案上傳至 GitHub！**
+```text
+EnterpriseDemo-OnboardingQuiz/
+├── app.py                                      # Streamlit 核心應用程式（門禁、三階段流程、PDF 渲染與 SMTP）
+├── index.html                                  # GitHub Pages 雙語互動模擬器與企業管治技術文件頁
+├── PRIVACY_POLICY.md                           # 個人資料收集聲明 (PICS) 與零留存私隱政策 (HK PDPO Cap. 486)
+├── SECURITY_COMPLIANCE.md                      # 資訊安全白皮書 (ISO 27001 / 9001 / 45001 與非 AI 邊界聲明)
+├── schemas/
+│   └── onboarding_assessment_schema.json       # JSON Schema (Draft-07) 資料結構與防注入校驗規範
+├── flows/
+│   ├── Flow1_WorkerSubmissionToHR.json         # 第一階段：員工提交、記憶體合成 PDF 與 TLS 加密傳輸工作流
+│   └── Flow2_HRAuditAndRecordRetention.json    # 第二階段：HR 受控歸檔與不合格（<75%）7 天補考追蹤工作流
+├── NotoSansTC-Regular.ttf                      # 繁體中文向量 PDF 嵌入字型
+├── requirements.txt                            # Python 依賴套件 (streamlit, fpdf2)
+├── .gitignore                                  # 排除 .streamlit/ 本機機密目錄
+└── LICENSE                                     # MIT 開源授權條款
+```
 
-**(English)** Please configure the following variables in your `.streamlit/secrets.toml` locally or in your cloud deployment platform's secrets management. **DO NOT commit this file to version control!**
+---
+
+## ⚙️ 快速部署與環境變數 / Quick Start & Secrets Configuration
+
+### 1. 本機安裝與啟動 / Local Installation
+
+```bash
+git clone [https://github.com/jackylawck/EnterpriseDemo-OnboardingQuiz.git](https://github.com/jackylawck/EnterpriseDemo-OnboardingQuiz.git)
+cd EnterpriseDemo-OnboardingQuiz
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+### 2. 設定機密環境變數 / Configure `.streamlit/secrets.toml`
+
+請於本機 `.streamlit/secrets.toml` 或 Streamlit Community Cloud 後台設定以下參數（**切勿將實際密碼提交至 Git**）：  
+*Configure the variables below in `.streamlit/secrets.toml` or Streamlit Cloud Secrets (**never commit credentials to Git**):*
 
 ```toml
-# 1. 員工通行碼 (自訂內部驗證密鑰) / Custom Access Passcode
+# 1. 員工通行碼 / Internal Access Passcode
 ACCESS_CODE = "your_demo_passcode"
 
-# 2. HR 接收電郵 / HR Destination Email
+# 2. HR 接收電郵 / HR Destination Mailbox
 HR_RECEIVER = "hr@example.com"
 
-# 3. 郵件伺服器與寄件帳號設定 (M365 SMTP 範例) / SMTP Configuration
+# 3. 郵件伺服器設定 (M365 SMTP STARTTLS) / SMTP Server Settings
 SMTP_SERVER = "smtp.office365.com"
 SMTP_PORT = 587
 SENDER_EMAIL = "system@example.com"
 SENDER_PASSWORD = "your_smtp_app_password"
 
-# 4. 完整題庫 JSON (字串格式) / Encapsulated Quiz JSON
+# 4. 受控題庫 JSON（支援 single / multiple / group_single 三種題型）
 QUESTIONS_JSON = '''[
   {
     "id": 1,
     "type": "single",
-    "question": "1. 企業核心價值為何？ (What is our core value?)",
-    "options": ["Integrity", "Profit", "Speed"],
-    "answer": ["Integrity"]
+    "question": "1. 企業核心管治原則為何？",
+    "options": ["誠信合規 (Integrity)", "僅追求速度", "無須紀錄"],
+    "answer": ["誠信合規 (Integrity)"]
+  },
+  {
+    "id": 2,
+    "type": "multiple",
+    "question": "2. 以下哪些屬於資訊安全日常守則？（每項 1 分）",
+    "options": ["離開座位鎖定螢幕", "啟用雙重驗證 (MFA)", "將密碼貼在螢幕上"],
+    "answer": ["離開座位鎖定螢幕", "啟用雙重驗證 (MFA)"]
+  },
+  {
+    "id": 3,
+    "type": "group_single",
+    "question": "3. 請為以下事項配對負責部門：",
+    "sub_questions": [
+      {
+        "sub_id": "3_1",
+        "label": "入職培訓紀錄與假期查詢",
+        "options": ["請選擇", "人力資源組", "會計組"],
+        "answer": "人力資源組"
+      }
+    ]
   }
 ]'''
-
 ```
 
 ---
 
-## 📄 文件與數據規範 / Document Standards & Compliance
+## ⚠️ 免責聲明 / Disclaimer
 
-* **管控編號 (Document ID)**: `DEMO-HR-REC-2026-V1`
-* **合規標準 (Compliance Frameworks)**:
-* 本系統展示之架構設計符合 **零資料滯留 (Privacy-by-Design)** 原則。
-* 符合 **ISO/IEC 27001** 資訊安全架構之存取隔離與傳輸加密精神。
-* The architecture is designed to comply with Privacy-by-Design principles and ISO/IEC 27001 information security standards regarding data transmission and secrets isolation.
+本專案為展示企業級人力資源數位化與零資料留存架構而設之通用示範（Enterprise Demo），所有受控編號（`DEMO-HR-REC-2026-V1`）、電郵端點及測試資料均為脫敏佔位符。
+
+*This repository is a generic enterprise demo created for HR governance and zero-data-retention architectural showcase. All document IDs (`DEMO-HR-REC-2026-V1`), email endpoints, and sample payloads are sanitized placeholders.*
 
