@@ -1,0 +1,78 @@
+{
+  "flow_id": "Flow1_WorkerSubmissionToHR",
+  "version": "1.0.0",
+  "title": "Stateless Onboarding Assessment & Encrypted SMTP Dispatch",
+  "description": "End-to-end automated pipeline from employee quiz submission to in-memory PDF synthesis and TLS email delivery without persistent cloud storage.",
+  "compliance_controls": [
+    "ISO/IEC 27001 - Cryptographic Controls & Secrets Isolation",
+    "Privacy-by-Design - Zero-Data-Retention (RAM-only processing)"
+  ],
+  "trigger": {
+    "type": "StreamlitFormSubmit",
+    "access_control": "SecretsTokenVerification",
+    "schema_ref": "schemas/onboarding_assessment_schema.json"
+  },
+  "actions": [
+    {
+      "step": 1,
+      "name": "Authenticate_Session",
+      "type": "SecurityGate",
+      "description": "Verify URL key parameter or manual password input against backend st.secrets.ACCESS_CODE.",
+      "fail_action": "TerminateExecution"
+    },
+    {
+      "step": 2,
+      "name": "Evaluate_Assessment_Score",
+      "type": "Compute",
+      "description": "Compare submitted answers against isolated st.secrets.QUESTIONS_JSON answer keys.",
+      "parameters": {
+        "total_score": 20,
+        "passing_threshold": 15,
+        "passing_percentage": 75.0
+      }
+    },
+    {
+      "step": 3,
+      "name": "Normalize_Timestamp",
+      "type": "DataTransformation",
+      "description": "Capture current UTC time and convert to Hong Kong Standard Time (UTC+8).",
+      "parameters": {
+        "timezone": "Asia/Hong_Kong",
+        "format": "%Y-%m-%d %H:%M:%S"
+      }
+    },
+    {
+      "step": 4,
+      "name": "Synthesize_Controlled_PDF",
+      "type": "DocumentGeneration",
+      "description": "Render vector A4 PDF in RAM using FPDF2 and embedded CJK font without writing to disk.",
+      "parameters": {
+        "document_id": "DEMO-HR-REC-2026-V1",
+        "font_file": "NotoSansTC-Regular.ttf",
+        "output_mode": "MemoryBufferBytes"
+      }
+    },
+    {
+      "step": 5,
+      "name": "Dispatch_Encrypted_Email",
+      "type": "SMTP_STARTTLS",
+      "description": "Transmit assessment summary and PDF attachment directly to HR mailbox over TLS.",
+      "parameters": {
+        "smtp_server": "st.secrets.SMTP_SERVER",
+        "smtp_port": 587,
+        "encryption": "STARTTLS",
+        "sender": "st.secrets.SENDER_EMAIL",
+        "recipient": "st.secrets.HR_RECEIVER",
+        "subject_template": "【入職培訓結果】{dept} - {name} ({emp_id})",
+        "attachment_filename": "入職培訓紀錄_{name}.pdf",
+        "content_type": "application/pdf"
+      }
+    },
+    {
+      "step": 6,
+      "name": "Purge_Session_Memory",
+      "type": "PrivacyCleanup",
+      "description": "Release PDF byte stream and clear PII from session state upon completion or reset."
+    }
+  ]
+}
