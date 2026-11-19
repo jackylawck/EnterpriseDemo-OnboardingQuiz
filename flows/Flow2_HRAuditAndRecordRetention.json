@@ -1,0 +1,52 @@
+{
+  "flow_id": "Flow2_HRAuditAndRecordRetention",
+  "version": "1.0.0",
+  "title": "HR Controlled Record Archiving & Compliance Exception Handling",
+  "description": "Downstream governance workflow for archiving controlled training records and triggering retraining for scores below the 75% threshold.",
+  "compliance_controls": [
+    "ISO 9001:2015 Clause 7.2 - Competence & Training Records",
+    "Data Protection Principles - Access Control & Retention Limits"
+  ],
+  "trigger": {
+    "type": "OnNewEmailArrival",
+    "mailbox": "HR_RECEIVER",
+    "subject_filter": "【入職培訓結果】",
+    "has_attachments": true
+  },
+  "actions": [
+    {
+      "step": 1,
+      "name": "Verify_Document_Control_Metadata",
+      "type": "AuditCheck",
+      "description": "Confirm PDF attachment contains controlled header ID DEMO-HR-REC-2026-V1 and valid HKT timestamp."
+    },
+    {
+      "step": 2,
+      "name": "Archive_To_IMS_Repository",
+      "type": "Storage",
+      "description": "Save controlled PDF record into restricted HR personnel training folder.",
+      "parameters": {
+        "folder_structure": "/HR_IMS_Records/{Year}/{Department}/",
+        "access_permission": "HR_Authorized_Personnel_Only"
+      }
+    },
+    {
+      "step": 3,
+      "name": "Evaluate_Compliance_Status",
+      "type": "ConditionalBranch",
+      "condition": "Subject contains '不合格 (FAIL)'",
+      "if_true": [
+        {
+          "action": "Flag_For_Retraining",
+          "description": "Create HR follow-up task to schedule mandatory onboarding review and re-assessment within 7 working days."
+        }
+      ],
+      "if_false": [
+        {
+          "action": "Close_Onboarding_Checklist",
+          "description": "Mark induction compliance requirement as Completed in HR master log."
+        }
+      ]
+    }
+  ]
+}
