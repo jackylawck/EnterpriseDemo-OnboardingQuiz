@@ -1,0 +1,137 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Enterprise Onboarding Assessment & Survey Payload Schema",
+  "description": "Validation schema for stateless in-memory processing of new hire onboarding assessments and engagement surveys.",
+  "type": "object",
+  "required": [
+    "document_control",
+    "basic_info",
+    "quiz_result",
+    "survey_data",
+    "submit_time"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "document_control": {
+      "type": "object",
+      "required": ["doc_id", "retention_policy"],
+      "properties": {
+        "doc_id": {
+          "type": "string",
+          "const": "DEMO-HR-REC-2026-V1"
+        },
+        "retention_policy": {
+          "type": "string",
+          "const": "ZERO_DATA_RETENTION_IN_MEMORY_ONLY"
+        }
+      }
+    },
+    "basic_info": {
+      "type": "object",
+      "required": ["name", "emp_id", "dept"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 50,
+          "pattern": "^[^<>\"'/\\\\;`%]+$"
+        },
+        "emp_id": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 20,
+          "pattern": "^[A-Za-z0-9-]+$"
+        },
+        "dept": {
+          "type": "string",
+          "enum": [
+            "管理層",
+            "寫字樓",
+            "人力資源組",
+            "行政組",
+            "計量組",
+            "規劃驗證組",
+            "發判組",
+            "項目組",
+            "施工組",
+            "工程組",
+            "安全及環保組",
+            "營運審計組",
+            "會計組",
+            "物控組",
+            "倉管組",
+            "其他"
+          ]
+        }
+      }
+    },
+    "quiz_result": {
+      "type": "object",
+      "required": ["score", "total", "pass_rate", "is_pass"],
+      "additionalProperties": false,
+      "properties": {
+        "score": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 20
+        },
+        "total": {
+          "type": "integer",
+          "const": 20
+        },
+        "pass_rate": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 100.0
+        },
+        "is_pass": {
+          "type": "boolean"
+        }
+      }
+    },
+    "survey_data": {
+      "type": "object",
+      "required": [
+        "s1_q1",
+        "s1_q2",
+        "s1_q3",
+        "s2_q1",
+        "s2_q3",
+        "s2_q5"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "s1_q1": { "type": "integer", "minimum": 1, "maximum": 5 },
+        "s1_q2": { "type": "integer", "minimum": 1, "maximum": 5 },
+        "s1_q3": { "type": "integer", "minimum": 1, "maximum": 5 },
+        "s1_q4": { "type": "string", "maxLength": 1000 },
+        "s2_q1": { "type": "integer", "minimum": 1, "maximum": 5 },
+        "s2_q2": {
+          "type": "array",
+          "items": { "type": "string", "maxLength": 50 }
+        },
+        "s2_q2_other": { "type": "string", "maxLength": 200 },
+        "s2_q3": { "type": "integer", "minimum": 1, "maximum": 5 },
+        "s2_q4": {
+          "type": "array",
+          "items": { "type": "string", "maxLength": 50 }
+        },
+        "s2_q4_other": { "type": "string", "maxLength": 200 },
+        "s2_q5": { "type": "integer", "minimum": 1, "maximum": 5 },
+        "s2_q6": { "type": "string", "maxLength": 1000 },
+        "s2_q7": { "type": "string", "maxLength": 1000 },
+        "s3_q1": { "type": "string", "maxLength": 2000 },
+        "s3_q2": { "type": "string", "maxLength": 2000 },
+        "s3_q3": { "type": "string", "maxLength": 2000 },
+        "s3_q4": { "type": "string", "maxLength": 2000 },
+        "s3_q5": { "type": "string", "maxLength": 2000 }
+      }
+    },
+    "submit_time": {
+      "type": "string",
+      "description": "Hong Kong Time (UTC+8) submission timestamp",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$"
+    }
+  }
+}
